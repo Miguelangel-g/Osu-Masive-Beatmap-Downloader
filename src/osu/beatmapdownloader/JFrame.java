@@ -1281,22 +1281,22 @@ public class JFrame extends javax.swing.JFrame {
         if (modeTAIKO)
          modes += "1,";
         if (modeCTB)
-         modes += "3,";
+         modes += "2,";
         if (modeMANIA)
-         modes += "4,";
+         modes += "3,";
         if (modes.length() == 0)
          modes = "";
         else
          modes = modes.substring(0, modes.length() - 1);
         String status = "";
         if (Ranked)
-         status += "0,";
-        if (Aprove)
          status += "1,";
+        if (Aprove)
+         status += "2,";
         if (UnRanked)
-         status += "3,";
+         status += "0,";
         if (Qualified)
-         status += "4,";
+         status += "3,";
         if (status.length() == 0)
          status = "";
         else
