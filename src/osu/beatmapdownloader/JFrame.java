@@ -18,11 +18,6 @@
 */
 
 
-/*
-http://osu.ppy.sh/api/get_beatmaps?k=b453cff95a1119dbc887e61b58a50e63f04ee3b8&b=1031519
-
-*/
-
 package osu.beatmapdownloader;
 
 
