@@ -11,9 +11,12 @@ public class Beatmap {
     String od;
     String ar;
     String bpm;
+    String star;
     String length;
+    String genre;
+    String lang;
 
-    public Beatmap(String ID, String name, String mode, String hp, String cs, String od, String ar, String bpm, String length) {
+    public Beatmap(String ID, String name, String mode, String hp, String cs, String od, String ar, String bpm, String star, String length, String genre, String lang) {
         this.ID = ID;
         this.name = name;
         this.mode = mode;
@@ -22,8 +25,12 @@ public class Beatmap {
         this.od = od;
         this.ar = ar;
         this.bpm = bpm;
+        this.star = star;
         this.length = length;
+        this.genre = genre;
+        this.lang = lang;
     }
+
     
     public String getID() {
         return ID;
@@ -37,8 +44,8 @@ public class Beatmap {
         return name;
     }
 
-    public void setName(String Name) {
-        this.name = Name;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getMode() {
@@ -89,6 +96,14 @@ public class Beatmap {
         this.bpm = bpm;
     }
 
+    public String getStar() {
+        return star;
+    }
+
+    public void setStar(String star) {
+        this.star = star;
+    }
+
     public String getLength() {
         return length;
     }
@@ -96,5 +111,22 @@ public class Beatmap {
     public void setLength(String length) {
         this.length = length;
     }
-   
+
+    public String getGenre() {
+        return genre;
+    }
+
+    public void setGenre(String genre) {
+        this.genre = genre;
+    }
+
+    public String getLang() {
+        return lang;
+    }
+
+    public void setLang(String lang) {
+        this.lang = lang;
+    }
+
+    
 }
