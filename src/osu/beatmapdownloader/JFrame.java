@@ -35,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
@@ -44,10 +43,7 @@ import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import models.Beatmap;
@@ -59,7 +55,7 @@ import static osu.beatmapdownloader.Browser.Address;
 
 public class JFrame extends javax.swing.JFrame {
  DefaultListModel model = new DefaultListModel();
- String Directory = "D:/osu!/Songs";
+  String Directory;
  Runnable runnable;
  Thread start;
  int prio = 0, errorConection = 0, Errors = 0, downloaded = 0;
@@ -77,12 +73,14 @@ public class JFrame extends javax.swing.JFrame {
      
   initComponents();
   goWebsite();
+  apiHelp();
+  dificultHelp();
   model.addElement("Osu! Server");
   model.addElement("Bloodcat Server");
   List_prio.setModel(model);
  }
 
- public static void goWebsite() {
+ public void goWebsite() {
 	String text="NewKey";
         L_madeBy.setText("<html>Made by player: <a href=\"\">"+text+"</a></html>");
         L_madeBy.setCursor(new Cursor(Cursor.HAND_CURSOR));
@@ -95,6 +93,36 @@ public class JFrame extends javax.swing.JFrame {
             }
         });
     }
+ 
+ public void apiHelp() {
+	String text="More Info";
+        L_apiHelp.setText("<html><a href=\"\">"+text+"</a></html>");
+        L_apiHelp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        L_apiHelp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                    try {
+                            Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/p/api"));
+                    } catch (URISyntaxException | IOException ex) {}
+            }
+        });
+    }
+ 
+ public void dificultHelp() {
+	String text="More Info";
+        L_difHelp.setText("<html><a href=\"\">"+text+"</a></html>");
+        L_difHelp.setCursor(new Cursor(Cursor.HAND_CURSOR));
+        L_difHelp.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                    try {
+                            Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/forum/t/178700&start=0"));
+                    } catch (URISyntaxException | IOException ex) {}
+            }
+        });
+    }
+ 
+ 
  @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -104,6 +132,7 @@ public class JFrame extends javax.swing.JFrame {
         L_Title = new javax.swing.JLabel();
         Sc_Error = new javax.swing.JScrollPane();
         T_Error = new javax.swing.JTextPane();
+        jLabel7 = new javax.swing.JLabel();
         P_ServerPrio = new javax.swing.JPanel();
         B_Down = new javax.swing.JButton();
         B_Up = new javax.swing.JButton();
@@ -120,7 +149,7 @@ public class JFrame extends javax.swing.JFrame {
         L_OsuAccount = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         T_Password = new javax.swing.JPasswordField();
-        jLabel14 = new javax.swing.JLabel();
+        L_apiHelp = new javax.swing.JLabel();
         P_Options = new javax.swing.JPanel();
         P_AvanSearch = new javax.swing.JPanel();
         L_Others = new javax.swing.JLabel();
@@ -167,7 +196,7 @@ public class JFrame extends javax.swing.JFrame {
         T_Mapper = new javax.swing.JTextField();
         L_SearchTerm2 = new javax.swing.JLabel();
         T_Difi = new javax.swing.JTextField();
-        jLabel11 = new javax.swing.JLabel();
+        L_difHelp = new javax.swing.JLabel();
         P_PreAna = new javax.swing.JPanel();
         L_inFinded = new javax.swing.JLabel();
         L_inPages = new javax.swing.JLabel();
@@ -178,7 +207,8 @@ public class JFrame extends javax.swing.JFrame {
         L_AnaPage1 = new javax.swing.JLabel();
         L_Downloaded = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        P_Search = new javax.swing.JProgressBar();
+        C_noVideo = new javax.swing.JCheckBox();
         P_LoadDown = new javax.swing.JPanel();
         B_ShowErrors = new javax.swing.JToggleButton();
         B_2Download = new javax.swing.JToggleButton();
@@ -196,11 +226,13 @@ public class JFrame extends javax.swing.JFrame {
         L_server = new javax.swing.JLabel();
         Pro_ProgressBar = new javax.swing.JProgressBar();
         jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
+        L_Second = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         L_seconds = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        jButton1 = new javax.swing.JButton();
         L_madeBy = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
 
         JFrame_Error.setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         JFrame_Error.setIconImage(getIconImage());
@@ -236,6 +268,8 @@ public class JFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        jLabel7.setText("jLabel7");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         setResizable(false);
@@ -265,7 +299,7 @@ public class JFrame extends javax.swing.JFrame {
         List_prio.setFocusable(false);
         Sc_Prio.setViewportView(List_prio);
 
-        jLabel13.setText("<html>If the Download Fail, <br>it will take the next, looping</html>");
+        jLabel13.setText("<html>If the Download Failed, <br>it will take the next, looping</html>");
 
         javax.swing.GroupLayout P_ServerPrioLayout = new javax.swing.GroupLayout(P_ServerPrio);
         P_ServerPrio.setLayout(P_ServerPrioLayout);
@@ -338,9 +372,15 @@ public class JFrame extends javax.swing.JFrame {
 
         L_OsuAccount.setText("Osu! Account: ");
 
-        jLabel12.setText("Enter Your Api Code to inprove The Advance Filter:");
+        jLabel12.setText("Enter Your API code to Improve The Advanced Filter:");
 
-        jLabel14.setText("More Info");
+        T_Password.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                T_PasswordFocusLost(evt);
+            }
+        });
+
+        L_apiHelp.setText("More Info");
 
         javax.swing.GroupLayout P_OsuPanelLayout = new javax.swing.GroupLayout(P_OsuPanel);
         P_OsuPanel.setLayout(P_OsuPanelLayout);
@@ -351,22 +391,25 @@ public class JFrame extends javax.swing.JFrame {
                 .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addComponent(C_OsuServer)
-                    .addGroup(P_OsuPanelLayout.createSequentialGroup()
-                        .addComponent(T_Directory, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(B_Directory, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(P_OsuPanelLayout.createSequentialGroup()
-                        .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_OsuPanelLayout.createSequentialGroup()
-                                .addComponent(L_OsuAccount)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(L_AccountAcept)
-                                .addGap(36, 36, 36)
-                                .addComponent(B_Login, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(T_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel14)))
-                .addGap(62, 62, 62))
+                    .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, P_OsuPanelLayout.createSequentialGroup()
+                            .addComponent(T_Password, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(L_apiHelp, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(P_OsuPanelLayout.createSequentialGroup()
+                            .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(P_OsuPanelLayout.createSequentialGroup()
+                                    .addComponent(T_Directory)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                                .addGroup(P_OsuPanelLayout.createSequentialGroup()
+                                    .addComponent(L_OsuAccount)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(L_AccountAcept)
+                                    .addGap(60, 60, 60)))
+                            .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(B_Directory, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(B_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(38, 38, 38))
         );
         P_OsuPanelLayout.setVerticalGroup(
             P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -378,7 +421,7 @@ public class JFrame extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(T_Password, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel14))
+                    .addComponent(L_apiHelp))
                 .addGap(0, 0, 0)
                 .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(B_Login, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -433,38 +476,37 @@ public class JFrame extends javax.swing.JFrame {
         P_AvanSearchLayout.setHorizontalGroup(
             P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_AvanSearchLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
-                .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_AvanSearchLayout.createSequentialGroup()
-                        .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(T_STAR, javax.swing.GroupLayout.DEFAULT_SIZE, 63, Short.MAX_VALUE)
-                            .addComponent(L_AR1)
-                            .addComponent(L_AR)
-                            .addComponent(T_AR)
-                            .addComponent(L_BPM)
-                            .addComponent(T_BPM))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(T_OD, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 80, Short.MAX_VALUE)
-                                .addComponent(T_CS, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(L_CS, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(L_HP, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(T_HP, javax.swing.GroupLayout.Alignment.LEADING))
-                            .addComponent(L_OD))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(L_Time)
-                            .addComponent(jLabel2)
-                            .addComponent(T_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(C_Genre, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)
-                            .addComponent(C_Lang, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(P_AvanSearchLayout.createSequentialGroup()
-                        .addComponent(L_Others)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel1)))
+                .addComponent(L_Others)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_AvanSearchLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(T_STAR)
+                    .addComponent(L_AR1)
+                    .addComponent(L_AR)
+                    .addComponent(T_AR)
+                    .addComponent(L_BPM)
+                    .addComponent(T_BPM, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addComponent(T_OD, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(T_CS, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(L_CS, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(L_HP, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(T_HP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(L_OD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(L_Time)
+                    .addComponent(jLabel2)
+                    .addComponent(T_Time, javax.swing.GroupLayout.PREFERRED_SIZE, 64, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(C_Genre, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel9)
+                    .addComponent(C_Lang, javax.swing.GroupLayout.PREFERRED_SIZE, 92, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(19, 19, 19))
         );
         P_AvanSearchLayout.setVerticalGroup(
             P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -485,7 +527,7 @@ public class JFrame extends javax.swing.JFrame {
                             .addComponent(L_AR1)
                             .addComponent(L_CS)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
                         .addComponent(T_STAR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
@@ -497,7 +539,7 @@ public class JFrame extends javax.swing.JFrame {
                             .addComponent(T_AR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(T_HP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 4, Short.MAX_VALUE)
                         .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(C_Lang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(P_AvanSearchLayout.createSequentialGroup()
@@ -507,7 +549,7 @@ public class JFrame extends javax.swing.JFrame {
                 .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
                         .addComponent(L_Time)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                         .addComponent(T_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
                         .addComponent(L_BPM)
@@ -515,7 +557,7 @@ public class JFrame extends javax.swing.JFrame {
                         .addComponent(T_BPM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
                         .addComponent(L_OD)
-                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addGap(0, 11, Short.MAX_VALUE)
                         .addComponent(T_OD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -561,6 +603,11 @@ public class JFrame extends javax.swing.JFrame {
 
         C_CalendarEnabled.setText("Enabled");
         C_CalendarEnabled.setFocusable(false);
+        C_CalendarEnabled.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                C_CalendarEnabledItemStateChanged(evt);
+            }
+        });
         C_CalendarEnabled.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 C_CalendarEnabledActionPerformed(evt);
@@ -613,7 +660,9 @@ public class JFrame extends javax.swing.JFrame {
 
         L_SearchTerm2.setText("Dificult name:");
 
-        jLabel11.setText("More Info");
+        T_Difi.setToolTipText("Case Splacensitive");
+
+        L_difHelp.setText("More Info");
 
         P_PreAna.setBorder(javax.swing.BorderFactory.createTitledBorder("Stadistics"));
 
@@ -657,11 +706,14 @@ public class JFrame extends javax.swing.JFrame {
                             .addComponent(L_AnaPage1))
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addComponent(jSeparator1)
+            .addComponent(P_Search, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         P_PreAnaLayout.setVerticalGroup(
             P_PreAnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_PreAnaLayout.createSequentialGroup()
-                .addGap(2, 2, 2)
+                .addGap(4, 4, 4)
+                .addComponent(P_Search, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(P_PreAnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(L_inFinded)
                     .addComponent(L_Finded))
@@ -679,11 +731,11 @@ public class JFrame extends javax.swing.JFrame {
                 .addGroup(P_PreAnaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(L_inPages)
                     .addComponent(L_AnaPage))
-                .addContainerGap())
+                .addGap(0, 0, 0))
         );
 
-        jCheckBox1.setText("<html>Download Without Video <br> (Only Osu! Server)</html>");
-        jCheckBox1.setFocusable(false);
+        C_noVideo.setText("<html>Download Without Video <br> (Only Osu! Server)</html>");
+        C_noVideo.setFocusable(false);
 
         javax.swing.GroupLayout P_OptionsLayout = new javax.swing.GroupLayout(P_Options);
         P_Options.setLayout(P_OptionsLayout);
@@ -699,6 +751,16 @@ public class JFrame extends javax.swing.JFrame {
                             .addGroup(P_OptionsLayout.createSequentialGroup()
                                 .addGroup(P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(P_OptionsLayout.createSequentialGroup()
+                                        .addComponent(L_Modes)
+                                        .addGap(2, 2, 2)
+                                        .addComponent(C_STD)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(C_TAIKO)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(C_CTB)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(C_MANIA))
+                                    .addGroup(P_OptionsLayout.createSequentialGroup()
                                         .addComponent(L_Type)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                         .addComponent(C_Ranked)
@@ -709,21 +771,11 @@ public class JFrame extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(C_Qualified))
                                     .addGroup(P_OptionsLayout.createSequentialGroup()
-                                        .addComponent(L_Modes)
-                                        .addGap(2, 2, 2)
-                                        .addComponent(C_STD)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(C_MANIA)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(C_CTB)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(C_TAIKO))
-                                    .addGroup(P_OptionsLayout.createSequentialGroup()
                                         .addComponent(L_SearchTerm1)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(T_Mapper, javax.swing.GroupLayout.PREFERRED_SIZE, 72, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox1)))
+                                        .addComponent(C_noVideo)))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(P_SearchDate, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -737,8 +789,8 @@ public class JFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(T_Difi, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11)))
-                .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(L_difHelp)))
+                .addGap(0, 0, 0))
         );
         P_OptionsLayout.setVerticalGroup(
             P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -748,18 +800,18 @@ public class JFrame extends javax.swing.JFrame {
                     .addComponent(L_SearchTerm)
                     .addComponent(L_SearchTerm2)
                     .addComponent(T_Difi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel11))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(L_difHelp))
+                .addGap(0, 0, 0)
                 .addGroup(P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_OptionsLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_OptionsLayout.createSequentialGroup()
                         .addGroup(P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(P_OptionsLayout.createSequentialGroup()
                                 .addGroup(P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(L_SearchTerm1)
                                     .addComponent(T_Mapper, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(18, 18, 18))
-                            .addComponent(jCheckBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 2, Short.MAX_VALUE)
+                            .addComponent(C_noVideo, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, 0)
                         .addGroup(P_OptionsLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(L_Modes)
                             .addComponent(C_STD)
@@ -781,7 +833,7 @@ public class JFrame extends javax.swing.JFrame {
                     .addGroup(P_OptionsLayout.createSequentialGroup()
                         .addComponent(P_SearchDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(P_PreAna, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(P_PreAna, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
@@ -836,8 +888,8 @@ public class JFrame extends javax.swing.JFrame {
 
         jLabel6.setText("Kb/sg");
 
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
-        jLabel7.setText("0");
+        L_Second.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
+        L_Second.setText("0");
 
         jLabel8.setText("Finishing on:");
 
@@ -846,8 +898,15 @@ public class JFrame extends javax.swing.JFrame {
 
         jLabel10.setText("Seconds");
 
-        L_madeBy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        L_madeBy.setText("Made by player: NewKey");
+        jButton1.setText("Clean All Fields");
+        jButton1.setToolTipText("No Avalible for Now");
+        jButton1.setEnabled(false);
+        jButton1.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout P_LoadDownLayout = new javax.swing.GroupLayout(P_LoadDown);
         P_LoadDown.setLayout(P_LoadDownLayout);
@@ -858,127 +917,141 @@ public class JFrame extends javax.swing.JFrame {
                 .addComponent(L_Try)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(L_Trying)
-                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addGap(148, 148, 148)
-                        .addComponent(B_Pause, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addGap(92, 92, 92)
-                        .addComponent(B_2Download, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(L_madeBy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addGap(106, 106, 106)
+                .addComponent(B_2Download, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(P_LoadDownLayout.createSequentialGroup()
                 .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(P_LoadDownLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(L_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel10))
-                            .addGroup(P_LoadDownLayout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(L_server, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(L_fileValue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(L_totalSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel6))
-                    .addGroup(P_LoadDownLayout.createSequentialGroup()
                         .addComponent(L_File)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(L_FileName, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(B_ShowErrors)
+                        .addComponent(L_FileName, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(P_LoadDownLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(L_server, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(32, 32, 32)
+                        .addComponent(L_fileValue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(L_totalSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(P_LoadDownLayout.createSequentialGroup()
+                        .addGap(213, 213, 213)
+                        .addComponent(B_Pause, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_LoadDownLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(L_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel10)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(L_Second, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19)
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(B_ShowErrors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(P_LoadDownLayout.createSequentialGroup()
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(L_Errors, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(L_Errors, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         P_LoadDownLayout.setVerticalGroup(
             P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(P_LoadDownLayout.createSequentialGroup()
-                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(L_Try)
+                        .addComponent(L_Trying))
+                    .addComponent(B_2Download))
+                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addGap(67, 67, 67)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(L_fileValue)
-                            .addComponent(L_totalSize)
-                            .addComponent(jLabel3))
-                        .addGap(5, 5, 5)
+                            .addComponent(jLabel4)
+                            .addComponent(L_Errors))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(B_ShowErrors)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addGroup(P_LoadDownLayout.createSequentialGroup()
+                        .addGap(1, 1, 1)
+                        .addComponent(B_Pause, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_LoadDownLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(L_fileValue)
+                                    .addComponent(L_totalSize)
+                                    .addComponent(jLabel3)))
+                            .addGroup(P_LoadDownLayout.createSequentialGroup()
+                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(L_File)
+                                    .addComponent(L_FileName))
+                                .addGap(2, 2, 2)
+                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(L_server))))
+                        .addGap(0, 0, 0)
                         .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(L_seconds)
                             .addComponent(jLabel8)
                             .addComponent(jLabel10)
                             .addComponent(jLabel6)
-                            .addComponent(jLabel7)))
-                    .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(P_LoadDownLayout.createSequentialGroup()
-                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(B_2Download)
-                                    .addComponent(L_madeBy))
-                                .addGap(25, 25, 25))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_LoadDownLayout.createSequentialGroup()
-                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(L_Try)
-                                    .addComponent(L_Trying)
-                                    .addComponent(B_Pause, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(P_LoadDownLayout.createSequentialGroup()
-                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(L_File)
-                                    .addComponent(L_FileName))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(L_server)))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_LoadDownLayout.createSequentialGroup()
-                                .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(L_Errors))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(B_ShowErrors)))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Pro_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(L_Second))))
+                .addGap(0, 0, 0)
+                .addComponent(Pro_ProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
+
+        L_madeBy.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        L_madeBy.setText("Made by: NewKey");
+
+        jButton2.setText("Help");
+        jButton2.setFocusable(false);
+        jButton2.setMargin(new java.awt.Insets(0, 0, 0, 0));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(P_Options, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(L_madeBy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(P_ServerPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(P_OsuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(P_LoadDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(P_LoadDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(0, 0, 0)
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(P_ServerPrio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(P_OsuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, 0)
                 .addComponent(P_Options, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(P_LoadDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, 0)
+                .addComponent(P_LoadDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(L_madeBy)
+                    .addComponent(jButton2)))
         );
 
         pack();
@@ -1009,10 +1082,10 @@ public class JFrame extends javax.swing.JFrame {
  private void C_OsuServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C_OsuServerActionPerformed
    if (C_OsuServer.isSelected()) {
     model.add(model.size(), "Osu! Server");
-    jCheckBox1.setEnabled(true);
+    C_noVideo.setEnabled(true);
    } else {
-       jCheckBox1.setSelected(false);
-       jCheckBox1.setEnabled(false);
+       C_noVideo.setSelected(false);
+       C_noVideo.setEnabled(false);
     for (int i = 0; i < model.size(); i++) {
      if (model.get(i).equals("Osu! Server"))
       model.remove(i);
@@ -1037,6 +1110,7 @@ public class JFrame extends javax.swing.JFrame {
 
  private void B_DirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DirectoryActionPerformed
    JFileChooser chooser;
+   
    chooser = new JFileChooser();
    chooser.setCurrentDirectory(new java.io.File("."));
    chooser.setDialogTitle("Open Osu! Installation Directory");
@@ -1065,22 +1139,13 @@ public class JFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_B_DirectoryActionPerformed
 
  private void C_CalendarEnabledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C_CalendarEnabledActionPerformed
-   if (C_CalendarEnabled.isSelected()) {
-    Ca_fromMonth.setEnabled(true);
-    Ca_fromYear.setEnabled(true);
-    Ca_toMonth.setEnabled(true);
-    Ca_toYear.setEnabled(true);
-   } else {
-    Ca_fromMonth.setEnabled(false);
-    Ca_fromYear.setEnabled(false);
-    Ca_toMonth.setEnabled(false);
-    Ca_toYear.setEnabled(false);
-   }
+   
   }//GEN-LAST:event_C_CalendarEnabledActionPerformed
 
  private void B_2DownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_2DownloadActionPerformed
    if (Validate()) {
     if (B_2Download.getText().contains("Search & Download")) {
+     block();
      B_2Download.setText("STOP");
      B_Pause.setText("||");
      runnable = new Runnable() {
@@ -1149,7 +1214,6 @@ public class JFrame extends javax.swing.JFrame {
          JSONArray jsonOsu = null;
          try {
           json = readJsonFromUrl("http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
-          L_inFinded.setText(json.length() + "");
           if (json.length() == 0) {
            break;
           }
@@ -1171,8 +1235,11 @@ public class JFrame extends javax.swing.JFrame {
           date.add((String) json.getJSONObject(i).get("synced"));
           creator.add((String) json.getJSONObject(i).get("creator"));
           jsonOsu = readJsonFromUrl("http://osu.ppy.sh/api/get_beatmaps?k="+APIcode+"&s="+idbm);
+          L_inFinded.setText(i + "");
+          P_Search.setMaximum(jsonOsu.length());
           ArrayList < Beatmap > beatmap = new ArrayList < Beatmap > ();
           for (int j = 0; j < jsonOsu.length(); j++) {
+           P_Search.setValue(j);
            idMap = jsonOsu.getJSONObject(j).getString("beatmap_id");
            name = jsonOsu.getJSONObject(j).getString("version"); 
            mode = jsonOsu.getJSONObject(j).getString("mode");
@@ -1189,6 +1256,7 @@ public class JFrame extends javax.swing.JFrame {
           }
           Beatmaps.add(beatmap);
          }
+         P_Search.setValue(0);
          Song = new Song(ID, stat, date, creator, Beatmaps);
          int alreadyTaken = 0;
          boolean toDownload = false;
@@ -1196,16 +1264,15 @@ public class JFrame extends javax.swing.JFrame {
           toDownload = false;
           errorConection = 0;
           L_Trying.setText(errorConection + "");
-          for (int j = 0; j < Songs.length; j++) {
-           String aux = Songs[j].toString();
-           String IDSongFolder = aux.substring(aux.lastIndexOf(File.separator) + 1, aux.indexOf(" "));
-           if (Song.getID().get(i).equals(IDSongFolder)) {
-            alreadyTaken++;
-            toDownload = true;
-            L_inAlready.setText(alreadyTaken + "");
-            break;
-           }
-          }
+             for (File Song1 : Songs) {
+                 String aux = Song1.toString();
+                 String IDSongFolder = aux.substring(aux.lastIndexOf(File.separator) + 1, aux.indexOf(" "));
+                 if (Song.getID().get(i).equals(IDSongFolder)) {
+                     alreadyTaken++;
+                     toDownload = true;
+                     L_inAlready.setText(alreadyTaken + "");
+                     break;
+                 } }
           if (toDownload == false) {
            for (int j = 0; j < Song.getBeatmap().get(i).size(); j++) {
             String dateSong = (String) Song.getDate().get(i);
@@ -1238,7 +1305,7 @@ public class JFrame extends javax.swing.JFrame {
                 && ((Lang==0)?true:LANG==Lang)
                     ) : false
             ) {
-             if (downloadSong((String) Song.getID().get(i), prio) == true) {
+             if (downloadSong((String) Song.getID().get(i), prio, Directory) == true) {
               downloaded++;
               L_Downloaded.setText(downloaded + "");
               break;
@@ -1261,12 +1328,13 @@ public class JFrame extends javax.swing.JFrame {
      start.start();
     } else {
      start.stop();
+     unblock();
      B_2Download.setText("Search & Download");
     }
    }
   }//GEN-LAST:event_B_2DownloadActionPerformed
 
- public boolean downloadSong(String idMap, int prio) {
+ public boolean downloadSong(String idMap, int prio,String Directory) {
   String fileName = null;
   try {
    String url = "";
@@ -1275,7 +1343,10 @@ public class JFrame extends javax.swing.JFrame {
     L_server.setText("Bloodcat Server");
    } else {
     if (C_OsuServer.isSelected() && model.get(0).toString().contains("Osu")) {
-     url = "http://osu.ppy.sh/d/" + idMap;
+      if(C_noVideo.isSelected())
+        url = "http://osu.ppy.sh/d/" + idMap+"n";
+      else
+         url = "http://osu.ppy.sh/d/" + idMap; 
      L_server.setText("Osu! Server");
     }
    }
@@ -1313,7 +1384,7 @@ public class JFrame extends javax.swing.JFrame {
     Pro_ProgressBar.setValue(bytes);
     totalRead += len;
     String speed = new DecimalFormat("#.##").format(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
-    jLabel7.setText(speed + "");
+    L_Second.setText(speed + "");
     L_seconds.setText(new DecimalFormat("#.##").format(((Double.parseDouble(new DecimalFormat("#.##").format(size * 0.000001)) - Double.parseDouble(new DecimalFormat("#.##").format(acu * 0.000001))) * 0.1 / (Double.parseDouble(speed)) * 10000)));
     if (Thread.interrupted()) { in .close();
      out.close();
@@ -1340,7 +1411,7 @@ public class JFrame extends javax.swing.JFrame {
    } else {
     if (model.getSize() == prio)
      prio = 0;
-    downloadSong(idMap, prio);
+    downloadSong(idMap, prio,Directory);
    }
    return false;
   }
@@ -1376,6 +1447,55 @@ public class JFrame extends javax.swing.JFrame {
         if(C_Genre.getSelectedIndex()==7)
             C_Genre.setSelectedIndex(8);
     }//GEN-LAST:event_C_GenreItemStateChanged
+
+    private void T_PasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_T_PasswordFocusLost
+        try {
+        JSONArray json;
+        String APIcode = Arrays.toString(T_Password.getPassword()).
+                replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
+        if(!APIcode.isEmpty()){
+            URL url = new URL("https://osu.ppy.sh/api/get_user?k="+APIcode);
+            URLConnection urlConn = url.openConnection();
+            BufferedReader in = new BufferedReader(new InputStreamReader(
+                    urlConn.getInputStream(), "UTF-8"));
+            String inputLine;
+            StringBuilder a = new StringBuilder();
+            while ((inputLine = in.readLine()) != null)
+                a.append(inputLine);
+            in.close();
+            a.toString();
+            L_apiHelp.setText("<html><font color=\"blue\">Correct API</font></html>");
+        }
+         }catch(Exception ex){
+             apiHelp();
+         Alert("Please provide a valid API key.");
+         }
+    }//GEN-LAST:event_T_PasswordFocusLost
+
+    private void C_CalendarEnabledItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_C_CalendarEnabledItemStateChanged
+        if (C_CalendarEnabled.isSelected()) {
+        Ca_fromMonth.setEnabled(true);
+        Ca_fromYear.setEnabled(true);
+        Ca_toMonth.setEnabled(true);
+        Ca_toYear.setEnabled(true);
+       } else {
+        Ca_fromMonth.setEnabled(false);
+        Ca_fromYear.setEnabled(false);
+        Ca_toMonth.setEnabled(false);
+        Ca_toYear.setEnabled(false);
+       }
+    }//GEN-LAST:event_C_CalendarEnabledItemStateChanged
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        //clean();
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+     try {
+         Desktop.getDesktop().browse(new URI("https://github.com/GarciaMiguelangel/Osu-Masive-Beatmap-Downloader/wiki"));
+     } catch (Exception ex) {
+     }
+    }//GEN-LAST:event_jButton2ActionPerformed
 
  private void Alert(String Content) {
   JOptionPane.showMessageDialog(null, Content, "Alert!", JOptionPane.ERROR_MESSAGE);
@@ -1495,23 +1615,152 @@ public class JFrame extends javax.swing.JFrame {
 
  public static JSONArray readJsonFromUrl(String url) throws Exception, JSONException {
   InputStream is = null;
+  String jsonText="";
   try {
    is = new URL(url).openStream();
    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-   String jsonText = readAll(rd);
+   jsonText = readAll(rd);
    JSONArray json = new JSONArray(jsonText);
    return json;
-  } finally {
+  }catch(Exception ex){
+      System.out.println("json= "+jsonText);
+      return null;
+  }finally {
    is.close();
   }
  }
 
 
  static void accountReady(String allCookieString) {
-  L_AccountAcept.setText("Account Ready");
+  L_AccountAcept.setText("<html><font color=\"blue\">Account Ready</font></html>");
   Cookie = allCookieString;
  }
  
+ public void block(){
+     T_Password.setEnabled(false);
+     B_Login.setEnabled(false);
+     T_Directory.setEnabled(false);
+     B_Directory.setEnabled(false);
+     T_SearchTerm.setEnabled(false);
+     T_Difi.setEnabled(false);
+     T_Mapper.setEnabled(false);
+     C_noVideo.setEnabled(false);        
+     C_CalendarEnabled.setEnabled(false);        
+     Ca_fromMonth.setEnabled(false); 
+     Ca_fromYear.setEnabled(false);
+     Ca_toMonth.setEnabled(false);
+     Ca_toYear.setEnabled(false);
+     C_STD.setEnabled(false);
+     C_TAIKO.setEnabled(false);
+     C_CTB.setEnabled(false);
+     C_MANIA.setEnabled(false);
+     C_Ranked.setEnabled(false);
+     C_Aprove.setEnabled(false);
+     C_Unraked.setEnabled(false);
+     C_Qualified.setEnabled(false);
+     T_STAR.setEnabled(false);
+     T_CS.setEnabled(false);        
+     T_AR.setEnabled(false);        
+     T_HP.setEnabled(false);        
+     T_BPM.setEnabled(false);       
+     T_OD.setEnabled(false);        
+     T_Time.setEnabled(false);        
+     C_Genre.setEnabled(false);        
+     C_Lang.setEnabled(false);        
+ }
+ 
+ public void unblock(){
+     T_Password.setEnabled(true);
+     B_Login.setEnabled(true);
+     T_Directory.setEnabled(true);
+     B_Directory.setEnabled(true);
+     T_SearchTerm.setEnabled(true);
+     T_Difi.setEnabled(true);
+     T_Mapper.setEnabled(true);
+     C_noVideo.setEnabled(true);        
+     C_CalendarEnabled.setEnabled(true);        
+     Ca_fromMonth.setEnabled(true); 
+     Ca_fromYear.setEnabled(true);
+     Ca_toMonth.setEnabled(true);
+     Ca_toYear.setEnabled(true);
+     C_STD.setEnabled(true);
+     C_TAIKO.setEnabled(true);
+     C_CTB.setEnabled(true);
+     C_MANIA.setEnabled(true);
+     C_Ranked.setEnabled(true);
+     C_Aprove.setEnabled(true);
+     C_Unraked.setEnabled(true);
+     C_Qualified.setEnabled(true);
+     T_STAR.setEnabled(true);
+     T_CS.setEnabled(true);        
+     T_AR.setEnabled(true);        
+     T_HP.setEnabled(true);        
+     T_BPM.setEnabled(true);       
+     T_OD.setEnabled(true);        
+     T_Time.setEnabled(true);        
+     C_Genre.setEnabled(true);        
+     C_Lang.setEnabled(true); 
+ }
+ 
+ 
+ /*
+ This will Activate after...
+ public void clean(){
+     C_OsuServer.setSelected(true);
+     T_Password.setText("");
+     apiHelp();
+     L_AccountAcept.setText("_______");
+     T_Directory.setText("");
+     T_SearchTerm.setText("");
+     T_Difi.setText("");
+     T_Mapper.setText("");
+     T_STAR.setText("");
+     T_CS.setText("");
+     T_AR.setText("");
+     T_HP.setText("");
+     T_BPM.setText("");
+     T_OD.setText("");
+     T_Time.setText("");
+     C_Genre.setSelectedIndex(0);
+     C_Lang.setSelectedIndex(0);
+     C_CalendarEnabled.setSelected(false);
+     C_noVideo.setSelected(false);
+     C_STD.setSelected(false);
+     C_MANIA.setSelected(false);
+     C_CTB.setSelected(false);
+     C_TAIKO.setSelected(false);
+     C_Ranked.setSelected(false);        
+     C_Aprove.setSelected(false);        
+     C_Unraked.setSelected(false);        
+     C_Qualified.setSelected(false);
+     L_inFinded.setText("0");
+     L_inAlready.setText("0");
+     L_Downloaded.setText("0");
+     P_Search.setValue(0);
+     Pro_ProgressBar.setValue(0);
+     L_Trying.setText("0");
+     L_FileName.setText("_____");
+     L_fileValue.setText("0");
+     L_totalSize.setText("0");
+     L_server.setText("_");
+     L_seconds.setText("0");
+     L_Second.setText("0");
+     L_Errors.setText("0");
+     T_Error.setText("");
+     L_inPages.setText("0");
+     Ca_fromMonth.setMonth(Calendar.getInstance().get(Calendar.MONTH));
+     Ca_toMonth.setMonth(Calendar.getInstance().get(Calendar.MONTH));
+     Ca_fromYear.setYear(Calendar.getInstance().get(Calendar.YEAR));
+     Ca_toYear.setYear(Calendar.getInstance().get(Calendar.YEAR));
+     //Variables
+     model.removeAllElements();
+     model.addElement("Osu! Server");
+     model.addElement("Bloodcat Server");
+     List_prio.setModel(model);
+     prio = 0; errorConection = 0; Errors = 0; downloaded = 0;
+     
+ }
+ */
  @Override public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Icon.png"));
         return retValue;
@@ -1538,6 +1787,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JCheckBox C_STD;
     private javax.swing.JCheckBox C_TAIKO;
     private javax.swing.JCheckBox C_Unraked;
+    private javax.swing.JCheckBox C_noVideo;
     private com.toedter.calendar.JMonthChooser Ca_fromMonth;
     private com.toedter.calendar.JYearChooser Ca_fromYear;
     private com.toedter.calendar.JMonthChooser Ca_toMonth;
@@ -1566,12 +1816,15 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel L_SearchTerm;
     private javax.swing.JLabel L_SearchTerm1;
     private javax.swing.JLabel L_SearchTerm2;
+    private javax.swing.JLabel L_Second;
     private javax.swing.JLabel L_Time;
     private javax.swing.JLabel L_Title;
     private javax.swing.JLabel L_To;
     private javax.swing.JLabel L_Try;
     private javax.swing.JLabel L_Trying;
     private javax.swing.JLabel L_Type;
+    private javax.swing.JLabel L_apiHelp;
+    private javax.swing.JLabel L_difHelp;
     private javax.swing.JLabel L_fileValue;
     private javax.swing.JLabel L_inAlready;
     private javax.swing.JLabel L_inFinded;
@@ -1586,6 +1839,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JPanel P_Options;
     private javax.swing.JPanel P_OsuPanel;
     private javax.swing.JPanel P_PreAna;
+    private javax.swing.JProgressBar P_Search;
     private javax.swing.JPanel P_SearchDate;
     private javax.swing.JPanel P_ServerPrio;
     private javax.swing.JProgressBar Pro_ProgressBar;
@@ -1605,13 +1859,12 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JTextField T_STAR;
     private javax.swing.JTextField T_SearchTerm;
     private javax.swing.JTextField T_Time;
-    private javax.swing.JCheckBox jCheckBox1;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

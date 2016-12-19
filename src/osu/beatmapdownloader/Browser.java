@@ -82,10 +82,6 @@ public class Browser extends Application {
  }
 
 
-
-
-
-
  public static void main(String[] args) {
   launch(args);
  }
@@ -124,13 +120,12 @@ public class Browser extends Application {
       if (Credentials()) {
        Alert alert = new Alert(AlertType.NONE, "Correct login \nClick Ok to continue.", ButtonType.OK);
        Stage stages = (Stage) alert.getDialogPane().getScene().getWindow();
-       //stages.getIcons().add(new Image("/Img/Icono.png"));
        stages.setTitle("Success");
        stage1.setAlwaysOnTop(true);
        stages.setAlwaysOnTop(true);
        stage1.setAlwaysOnTop(false);
        stages.setAlwaysOnTop(false);
-       alert.showAndWait();
+       //alert.showAndWait();
        JFrame.accountReady(allCookieString);
        stage1.close();
       } else {
