@@ -467,7 +467,7 @@ public class JFrame extends javax.swing.JFrame {
 
         L_AR.setText("AR: ");
 
-        L_CS.setText("CS: ");
+        L_CS.setText("CS/Keys Amount: ");
 
         L_BPM.setText("BPM:");
 
@@ -517,9 +517,9 @@ public class JFrame extends javax.swing.JFrame {
                     .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(T_OD, javax.swing.GroupLayout.Alignment.LEADING)
                         .addComponent(T_CS, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(L_CS, javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(L_CS, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(L_HP, javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(T_HP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(T_HP, javax.swing.GroupLayout.Alignment.LEADING))
                     .addComponent(L_OD))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1248,10 +1248,12 @@ public class JFrame extends javax.swing.JFrame {
          JSONArray jsonOsu = null;
          try {
           json = readJsonFromUrl("http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
+             System.out.println("URL= "+"http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
           if (json.length() == 0) {
            break;
           }
          } catch (Exception e) {
+                e.printStackTrace();
                 errorFatal("JSON "+"http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
                 errorFatal(e.toString());
                 errorFatal("--------------------------------------");  
@@ -1684,12 +1686,13 @@ public class JFrame extends javax.swing.JFrame {
   InputStream is = null;
   String jsonText="";
   try {
-   is = new URL(url).openStream();
+   is = new URL(url.replaceAll(" ", "+")).openStream();
    BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
    jsonText = readAll(rd);
    JSONArray json = new JSONArray(jsonText);
    return json;
   }catch(Exception ex){
+      ex.printStackTrace();
       errorFatal("JSON URL "+url);
       errorFatal(ex.toString());
       errorFatal("--------------------------------------");  

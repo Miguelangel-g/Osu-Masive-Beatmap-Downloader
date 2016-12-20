@@ -594,9 +594,9 @@
                           <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                               <Component id="T_OD" alignment="0" max="32767" attributes="0"/>
                               <Component id="T_CS" alignment="0" max="32767" attributes="0"/>
-                              <Component id="L_CS" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="L_CS" alignment="0" max="32767" attributes="0"/>
                               <Component id="L_HP" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="T_HP" alignment="0" min="-2" pref="80" max="-2" attributes="0"/>
+                              <Component id="T_HP" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <Component id="L_OD" alignment="0" min="-2" max="-2" attributes="0"/>
                       </Group>
@@ -707,7 +707,7 @@
             </Component>
             <Component class="javax.swing.JLabel" name="L_CS">
               <Properties>
-                <Property name="text" type="java.lang.String" value="CS: "/>
+                <Property name="text" type="java.lang.String" value="CS/Keys Amount: "/>
               </Properties>
             </Component>
             <Component class="javax.swing.JLabel" name="L_BPM">
