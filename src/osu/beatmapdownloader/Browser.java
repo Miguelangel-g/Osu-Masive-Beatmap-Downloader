@@ -83,7 +83,13 @@ public class Browser extends Application {
 
 
  public static void main(String[] args) {
-  launch(args);
+     try {
+         launch(args);
+     } catch (Exception e) {
+         JFrame.errorFatal("Launch");
+         JFrame.errorFatal(e.toString());
+         JFrame.errorFatal("--------------------------------------");  
+     }
  }
 
  private HBox createProgressReport(WebEngine engine) {
@@ -108,33 +114,41 @@ public class Browser extends Application {
   engine.getLoadWorker().stateProperty().addListener(new ChangeListener < Worker.State > () {
    @Override
    public void changed(ObservableValue < ? extends Worker.State > observableValue, Worker.State oldState, Worker.State state) {
-    switch (state) {
-     case RUNNING:
-      startTime.set(System.nanoTime());
-      String url = "https://osu.ppy.sh/forum/ucp.php?mode=login";
-      if (!webview.getEngine().getLocation().equals(url))
-       webview.getEngine().load(url);
-      break;
-     case SUCCEEDED:
-      endTime.set(System.nanoTime());
-      if (Credentials()) {
-       Alert alert = new Alert(AlertType.NONE, "Correct login \nClick Ok to continue.", ButtonType.OK);
-       Stage stages = (Stage) alert.getDialogPane().getScene().getWindow();
-       stages.setTitle("Success");
-       stage1.setAlwaysOnTop(true);
-       stages.setAlwaysOnTop(true);
-       stage1.setAlwaysOnTop(false);
-       stages.setAlwaysOnTop(false);
-       //alert.showAndWait();
-       JFrame.accountReady(allCookieString);
-       stage1.close();
-      } else {
-       url = "https://osu.ppy.sh/forum/ucp.php?mode=login";
-       if (!webview.getEngine().getLocation().equals(url))
-        webview.getEngine().load(url);
-      }
-      break;
-    }
+       try {
+           switch (state) {
+               case RUNNING:
+                   startTime.set(System.nanoTime());
+                   String url = "https://osu.ppy.sh/forum/ucp.php?mode=login";
+                   if (!webview.getEngine().getLocation().equals(url)) {
+                       webview.getEngine().load(url);
+                   }
+                   break;
+               case SUCCEEDED:
+                   endTime.set(System.nanoTime());
+                   if (Credentials()) {
+                       Alert alert = new Alert(AlertType.NONE, "Correct login \nClick Ok to continue.", ButtonType.OK);
+                       Stage stages = (Stage) alert.getDialogPane().getScene().getWindow();
+                       stages.setTitle("Success");
+                       stage1.setAlwaysOnTop(true);
+                       stages.setAlwaysOnTop(true);
+                       stage1.setAlwaysOnTop(false);
+                       stages.setAlwaysOnTop(false);
+                       //alert.showAndWait();
+                       JFrame.accountReady(allCookieString);
+                       stage1.close();
+                   } else {
+                       url = "https://osu.ppy.sh/forum/ucp.php?mode=login";
+                       if (!webview.getEngine().getLocation().equals(url)) {
+                           webview.getEngine().load(url);
+                       }
+                   }
+                   break;
+           }
+       } catch (Exception e) {
+           JFrame.errorFatal("Loading");
+           JFrame.errorFatal(e.toString());
+           JFrame.errorFatal("--------------------------------------");  
+       }
    }
   });
 
@@ -164,6 +178,10 @@ public class Browser extends Application {
    else return false;
 
   } catch (Exception e) {
+      JFrame.errorFatal("Credentials");
+      JFrame.errorFatal(e.toString());
+      JFrame.errorFatal("--------------------------------------");  
+      
    return false;
   }
  }

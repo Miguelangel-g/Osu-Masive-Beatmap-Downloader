@@ -78,6 +78,7 @@ public class JFrame extends javax.swing.JFrame {
   model.addElement("Osu! Server");
   model.addElement("Bloodcat Server");
   List_prio.setModel(model);
+  Sc_fatalError.setVisible(false);
  }
 
  public void goWebsite() {
@@ -132,6 +133,9 @@ public class JFrame extends javax.swing.JFrame {
         L_Title = new javax.swing.JLabel();
         Sc_Error = new javax.swing.JScrollPane();
         T_Error = new javax.swing.JTextPane();
+        B_fatalErrors = new javax.swing.JButton();
+        Sc_fatalError = new javax.swing.JScrollPane();
+        T_fatalError = new javax.swing.JTextPane();
         jLabel7 = new javax.swing.JLabel();
         P_ServerPrio = new javax.swing.JPanel();
         B_Down = new javax.swing.JButton();
@@ -240,21 +244,37 @@ public class JFrame extends javax.swing.JFrame {
         L_Title.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
         L_Title.setText("Here will show your errors.");
 
+        T_Error.setEditable(false);
         Sc_Error.setViewportView(T_Error);
+
+        B_fatalErrors.setText("Show Fatal Errors");
+        B_fatalErrors.setFocusable(false);
+        B_fatalErrors.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_fatalErrorsActionPerformed(evt);
+            }
+        });
+
+        Sc_fatalError.setViewportView(T_fatalError);
 
         javax.swing.GroupLayout JFrame_ErrorLayout = new javax.swing.GroupLayout(JFrame_Error.getContentPane());
         JFrame_Error.getContentPane().setLayout(JFrame_ErrorLayout);
         JFrame_ErrorLayout.setHorizontalGroup(
             JFrame_ErrorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Separetor)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JFrame_ErrorLayout.createSequentialGroup()
-                .addContainerGap(115, Short.MAX_VALUE)
+            .addGroup(JFrame_ErrorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(L_Title)
                 .addGap(135, 135, 135))
             .addGroup(JFrame_ErrorLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Sc_Error)
-                .addContainerGap())
+                .addGroup(JFrame_ErrorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(Sc_Error, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(Sc_fatalError, javax.swing.GroupLayout.PREFERRED_SIZE, 402, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, JFrame_ErrorLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(B_fatalErrors, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         JFrame_ErrorLayout.setVerticalGroup(
             JFrame_ErrorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,9 +283,12 @@ public class JFrame extends javax.swing.JFrame {
                 .addComponent(L_Title)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Separetor, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(Sc_Error, javax.swing.GroupLayout.PREFERRED_SIZE, 202, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, 0)
+                .addComponent(Sc_Error, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(Sc_fatalError, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(B_fatalErrors))
         );
 
         jLabel7.setText("jLabel7");
@@ -527,7 +550,7 @@ public class JFrame extends javax.swing.JFrame {
                             .addComponent(L_AR1)
                             .addComponent(L_CS)
                             .addComponent(jLabel2))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 10, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(T_STAR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
@@ -539,7 +562,7 @@ public class JFrame extends javax.swing.JFrame {
                             .addComponent(T_AR, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(T_HP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
-                        .addGap(0, 4, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(C_Lang, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(P_AvanSearchLayout.createSequentialGroup()
@@ -549,7 +572,7 @@ public class JFrame extends javax.swing.JFrame {
                 .addGroup(P_AvanSearchLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
                         .addComponent(L_Time)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(T_Time, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
                         .addComponent(L_BPM)
@@ -557,7 +580,7 @@ public class JFrame extends javax.swing.JFrame {
                         .addComponent(T_BPM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(P_AvanSearchLayout.createSequentialGroup()
                         .addComponent(L_OD)
-                        .addGap(0, 11, Short.MAX_VALUE)
+                        .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(T_OD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
@@ -951,7 +974,7 @@ public class JFrame extends javax.swing.JFrame {
                         .addGap(19, 19, 19)
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 28, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(B_ShowErrors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(P_LoadDownLayout.createSequentialGroup()
@@ -1030,12 +1053,11 @@ public class JFrame extends javax.swing.JFrame {
                     .addComponent(L_madeBy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(P_ServerPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(P_OsuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(P_LoadDown, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(P_ServerPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(P_OsuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(P_LoadDown, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1064,7 +1086,11 @@ public class JFrame extends javax.swing.JFrame {
     Object aux = model.get(posc);
     model.remove(posc);
     model.add(0, aux);
-   } catch (Exception e) {}
+   } catch (Exception e) {
+   errorFatal("B_UpActionPerformed");
+   errorFatal(e.toString());
+   errorFatal("--------------------------------------");
+   }
   }//GEN-LAST:event_B_UpActionPerformed
 
 
@@ -1075,7 +1101,11 @@ public class JFrame extends javax.swing.JFrame {
     Object aux = model.get(posc);
     model.remove(posc);
     model.add(1, aux);
-   } catch (Exception e) {}
+   } catch (Exception e) {
+    errorFatal("B_DownActionPerformed");
+    errorFatal(e.toString());
+    errorFatal("--------------------------------------");
+   }
   }//GEN-LAST:event_B_DownActionPerformed
 
 
@@ -1146,6 +1176,8 @@ public class JFrame extends javax.swing.JFrame {
    if (Validate()) {
     if (B_2Download.getText().contains("Search & Download")) {
      block();
+     T_fatalError.setText("");
+     T_Error.setText("");
      B_2Download.setText("STOP");
      B_Pause.setText("||");
      runnable = new Runnable() {
@@ -1157,6 +1189,7 @@ public class JFrame extends javax.swing.JFrame {
         String APIcode = Arrays.toString(T_Password.getPassword()).
                 replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
         String mapper = T_Mapper.getText().trim();
+        String difi = T_Difi.getText();
         boolean modeSTD = C_STD.isSelected();
         boolean modeMANIA = C_MANIA.isSelected();
         boolean modeTAIKO = C_TAIKO.isSelected();
@@ -1167,6 +1200,7 @@ public class JFrame extends javax.swing.JFrame {
         boolean Qualified = C_Qualified.isSelected();
         boolean Mapper = T_Mapper.getText().isEmpty();
         boolean Star = T_STAR.getText().isEmpty();
+        boolean Difi = T_Difi.getText().isEmpty();
         Double ARmin = _ARmin, ARmax = _ARmax, CSmin = _CSmin, CSmax = _CSmax;
         Double HPmin = _HPmin, HPmax = _HPmax, BPMmin = _BPMmin, BPMmax = _BPMmax;
         Double Timemin = _Timemin, Timemax = _Timemax, ODmin = _ODmin, ODmax = _ODmax;
@@ -1218,6 +1252,9 @@ public class JFrame extends javax.swing.JFrame {
            break;
           }
          } catch (Exception e) {
+                errorFatal("JSON "+"http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
+                errorFatal(e.toString());
+                errorFatal("--------------------------------------");  
           Search = false;
           continue;
          }
@@ -1281,6 +1318,7 @@ public class JFrame extends javax.swing.JFrame {
             String mo = dateSong.substring(dateSong.indexOf("-") + 1, dateSong.lastIndexOf("-"));
             int SongMonth = Integer.parseInt(mo);
             String CREATOR = Song.getCreator().get(i).toString();
+            String DIFI = Song.getBeatmap().get(i).get(j).getName();
             Double HP = Double.parseDouble(Song.getBeatmap().get(i).get(j).getHp());
             Double CS = Double.parseDouble(Song.getBeatmap().get(i).get(j).getCs());
             Double OD = Double.parseDouble(Song.getBeatmap().get(i).get(j).getOd());
@@ -1301,6 +1339,7 @@ public class JFrame extends javax.swing.JFrame {
                 && ((Timemax!=99999.0) ? (Timemin <= LEN && LEN <= Timemax) : (Timemin >= LEN && LEN <= Timemax))
                 && ((!Star)?(STARmin <= STAR && STAR <= STARmax):true)
                 && ((!Mapper)?mapper.contains(CREATOR):true)
+                && ((!Difi)?difi.contains(DIFI):true)
                 && ((Genre==0)?true:GENRE==Genre)
                 && ((Lang==0)?true:LANG==Lang)
                     ) : false
@@ -1320,7 +1359,9 @@ public class JFrame extends javax.swing.JFrame {
         } while (Search == false);
 
        } catch (Exception e) {
-        e.printStackTrace();
+                errorFatal("FATAL");
+                errorFatal(e.toString());
+                errorFatal("--------------------------------------");  
        }
       }
      };
@@ -1397,7 +1438,9 @@ public class JFrame extends javax.swing.JFrame {
    aux.deleteOnExit();
    return true;
   } catch (Exception e) {
-   e.printStackTrace();
+    errorFatal("DOWNLOADING");
+    errorFatal(e.toString());
+    errorFatal("--------------------------------------");  
    prio++;
    errorConection++;
    L_Trying.setText(errorConection + "");
@@ -1420,6 +1463,7 @@ public class JFrame extends javax.swing.JFrame {
 
  private void B_ShowErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ShowErrorsActionPerformed
    JFrame_Error.pack();
+   JFrame_Error.setTitle("Errors");
    JFrame_Error.setLocationRelativeTo(null);
    JFrame_Error.setVisible(true);
   }//GEN-LAST:event_B_ShowErrorsActionPerformed
@@ -1493,9 +1537,26 @@ public class JFrame extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
      try {
          Desktop.getDesktop().browse(new URI("https://github.com/GarciaMiguelangel/Osu-Masive-Beatmap-Downloader/wiki"));
-     } catch (Exception ex) {
+     } catch (Exception e) {
+        errorFatal("To Git");
+        errorFatal(e.toString());
+        errorFatal("--------------------------------------");  
      }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void B_fatalErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_fatalErrorsActionPerformed
+       // T_fatalError.
+        if(B_fatalErrors.getText().contains("Show Fatal Errors")){
+            B_fatalErrors.setText("Hide Fatal Errors");
+            Sc_fatalError.setVisible(true);
+            Sc_Error.setVisible(false);
+        }else{
+            B_fatalErrors.setText("Show Fatal Errors");
+            Sc_fatalError.setVisible(false);
+            Sc_Error.setVisible(true);
+        }
+        JFrame_Error.pack();
+    }//GEN-LAST:event_B_fatalErrorsActionPerformed
 
  private void Alert(String Content) {
   JOptionPane.showMessageDialog(null, Content, "Alert!", JOptionPane.ERROR_MESSAGE);
@@ -1506,7 +1567,13 @@ public class JFrame extends javax.swing.JFrame {
   int len = T_Error.getDocument().getLength();
   T_Error.setCaretPosition(len);
  }
-
+ 
+ 
+ static void errorFatal(String Content) {
+  T_fatalError.setText(T_fatalError.getText() + Content + " \n");
+  int len = T_fatalError.getDocument().getLength();
+  T_fatalError.setCaretPosition(len);
+ }
 
  private boolean Validate() {
   try {
@@ -1623,7 +1690,9 @@ public class JFrame extends javax.swing.JFrame {
    JSONArray json = new JSONArray(jsonText);
    return json;
   }catch(Exception ex){
-      System.out.println("json= "+jsonText);
+      errorFatal("JSON URL "+url);
+      errorFatal(ex.toString());
+      errorFatal("--------------------------------------");  
       return null;
   }finally {
    is.close();
@@ -1775,6 +1844,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JButton B_Pause;
     private javax.swing.JToggleButton B_ShowErrors;
     private javax.swing.JButton B_Up;
+    private javax.swing.JButton B_fatalErrors;
     private javax.swing.JCheckBox C_Aprove;
     private javax.swing.JCheckBox C_CTB;
     private javax.swing.JCheckBox C_CalendarEnabled;
@@ -1845,6 +1915,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JProgressBar Pro_ProgressBar;
     private javax.swing.JScrollPane Sc_Error;
     private javax.swing.JScrollPane Sc_Prio;
+    public static javax.swing.JScrollPane Sc_fatalError;
     private javax.swing.JSeparator Separetor;
     private javax.swing.JTextField T_AR;
     private javax.swing.JTextField T_BPM;
@@ -1859,6 +1930,7 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JTextField T_STAR;
     private javax.swing.JTextField T_SearchTerm;
     private javax.swing.JTextField T_Time;
+    public static javax.swing.JTextPane T_fatalError;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
