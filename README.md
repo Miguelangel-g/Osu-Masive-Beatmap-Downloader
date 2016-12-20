@@ -38,6 +38,6 @@ It contains statistics to keep track of what you download as download speed, etc
 <br><br>Need Java 1.7 or higher! 
 <br><br>
 <strong>Image:</strong><br>
-<img src="http://puu.sh/sViEa.PNG" width='65%'>
+<img src="http://puu.sh/sViEa.PNG" width='48%'>
 <br>
 <img src="http://puu.sh/sPTKT.png" width='70%'>
