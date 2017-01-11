@@ -19,6 +19,12 @@
 
 package osu.beatmapdownloader;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.util.Properties;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -29,13 +35,10 @@ public class Main {
   } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException e) {
    System.out.println("Unable to load Windows look and feel");
   }
-
   JFrame frame = new JFrame();
   frame.setTitle("Osu! Masive Beatmap Downloader");
   frame.setLocationRelativeTo(null);
   frame.pack();
   frame.setVisible(true);
  }
- 
-
 }

@@ -25,24 +25,30 @@ import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.Image;
 import java.awt.Toolkit;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import models.Song;
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.io.Reader;
+import java.math.BigDecimal;
+import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.net.URLConnection;
-import java.nio.charset.Charset;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
+import java.util.Properties;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -50,7 +56,12 @@ import models.Beatmap;
 import org.apache.commons.io.FileUtils;
 import org.json.JSONArray;
 import org.json.JSONException;
-import static osu.beatmapdownloader.Browser.Address;
+import org.jsoup.Connection.Method;
+import org.jsoup.Connection.Response;
+import org.jsoup.Jsoup;
+import org.apache.commons.codec.binary.Base64;
+import org.apache.commons.io.IOUtils;
+import org.json.JSONTokener;
 
 
 public class JFrame extends javax.swing.JFrame {
@@ -79,6 +90,13 @@ public class JFrame extends javax.swing.JFrame {
   model.addElement("Bloodcat Server");
   List_prio.setModel(model);
   Sc_fatalError.setVisible(false);
+  load();
+     
+  
+
+
+
+
  }
 
  public void goWebsite() {
@@ -137,6 +155,15 @@ public class JFrame extends javax.swing.JFrame {
         Sc_fatalError = new javax.swing.JScrollPane();
         T_fatalError = new javax.swing.JTextPane();
         jLabel7 = new javax.swing.JLabel();
+        JFrame_login = new javax.swing.JFrame();
+        jLabel11 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jLabel14 = new javax.swing.JLabel();
+        T_User = new javax.swing.JTextField();
+        jLabel15 = new javax.swing.JLabel();
+        T_Pass = new javax.swing.JPasswordField();
+        B_Continue = new javax.swing.JButton();
+        B_Cancel = new javax.swing.JButton();
         P_ServerPrio = new javax.swing.JPanel();
         B_Down = new javax.swing.JButton();
         B_Up = new javax.swing.JButton();
@@ -293,6 +320,91 @@ public class JFrame extends javax.swing.JFrame {
 
         jLabel7.setText("jLabel7");
 
+        JFrame_login.setTitle("Login");
+        JFrame_login.setIconImage(getIconImage());
+
+        jLabel11.setText("<html><center>After you log in, it will take your cookies in order to Download on Osu! Server <br> Like if you actually log in. if you continue you agree with this.</center></html>");
+
+        jLabel14.setText("Username:");
+
+        T_User.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                T_UserKeyPressed(evt);
+            }
+        });
+
+        jLabel15.setText("Password:");
+
+        T_Pass.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                T_PassKeyPressed(evt);
+            }
+        });
+
+        B_Continue.setText("Continue");
+        B_Continue.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_ContinueActionPerformed(evt);
+            }
+        });
+
+        B_Cancel.setText("Cancel");
+        B_Cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                B_CancelActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout JFrame_loginLayout = new javax.swing.GroupLayout(JFrame_login.getContentPane());
+        JFrame_login.getContentPane().setLayout(JFrame_loginLayout);
+        JFrame_loginLayout.setHorizontalGroup(
+            JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JFrame_loginLayout.createSequentialGroup()
+                .addGroup(JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(JFrame_loginLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(B_Cancel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(B_Continue))
+                    .addGroup(JFrame_loginLayout.createSequentialGroup()
+                        .addGroup(JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(JFrame_loginLayout.createSequentialGroup()
+                                .addGap(43, 43, 43)
+                                .addGroup(JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15)
+                                    .addComponent(jLabel14)
+                                    .addGroup(JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(T_Pass, javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(T_User, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(JFrame_loginLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 268, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jSeparator2))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        JFrame_loginLayout.setVerticalGroup(
+            JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(JFrame_loginLayout.createSequentialGroup()
+                .addGap(7, 7, 7)
+                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 61, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel14)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(T_User, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel15)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(T_Pass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21)
+                .addGroup(JFrame_loginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(B_Continue)
+                    .addComponent(B_Cancel))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setIconImage(getIconImage());
         setResizable(false);
@@ -422,13 +534,11 @@ public class JFrame extends javax.swing.JFrame {
                         .addGroup(P_OsuPanelLayout.createSequentialGroup()
                             .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(P_OsuPanelLayout.createSequentialGroup()
-                                    .addComponent(T_Directory)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                                .addGroup(P_OsuPanelLayout.createSequentialGroup()
                                     .addComponent(L_OsuAccount)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(L_AccountAcept)
-                                    .addGap(60, 60, 60)))
+                                    .addComponent(L_AccountAcept, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(T_Directory))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(P_OsuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addComponent(B_Directory, javax.swing.GroupLayout.PREFERRED_SIZE, 131, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(B_Login, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))))
@@ -937,44 +1047,49 @@ public class JFrame extends javax.swing.JFrame {
             P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(Pro_ProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(P_LoadDownLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(L_Try)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(L_Trying)
-                .addGap(106, 106, 106)
+                .addGap(96, 96, 96)
                 .addComponent(B_2Download, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(P_LoadDownLayout.createSequentialGroup()
                 .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addComponent(L_File)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(L_FileName, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(L_server, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)
-                        .addComponent(L_fileValue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(L_totalSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(P_LoadDownLayout.createSequentialGroup()
-                        .addGap(213, 213, 213)
-                        .addComponent(B_Pause, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, P_LoadDownLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(L_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(L_Second, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(19, 19, 19)
-                        .addComponent(jLabel6)
-                        .addGap(18, 18, 18)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(L_File, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_LoadDownLayout.createSequentialGroup()
+                                .addComponent(L_server, javax.swing.GroupLayout.PREFERRED_SIZE, 89, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(32, 32, 32)
+                                .addComponent(L_fileValue, javax.swing.GroupLayout.PREFERRED_SIZE, 68, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel3)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(L_totalSize, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(L_FileName, javax.swing.GroupLayout.PREFERRED_SIZE, 321, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(30, 30, 30))
+                    .addGroup(P_LoadDownLayout.createSequentialGroup()
+                        .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(P_LoadDownLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(L_seconds, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(L_Second, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(19, 19, 19)
+                                .addComponent(jLabel6))
+                            .addGroup(P_LoadDownLayout.createSequentialGroup()
+                                .addGap(213, 213, 213)
+                                .addComponent(B_Pause, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(43, 43, 43)))
                 .addGroup(P_LoadDownLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(B_ShowErrors, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(P_LoadDownLayout.createSequentialGroup()
@@ -1047,17 +1162,19 @@ public class JFrame extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(P_Options, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(L_madeBy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(layout.createSequentialGroup()
-                    .addComponent(P_ServerPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                    .addComponent(P_OsuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addComponent(P_LoadDown, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(L_madeBy, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(P_ServerPrio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(P_OsuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 327, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(P_LoadDown, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1124,18 +1241,9 @@ public class JFrame extends javax.swing.JFrame {
   }//GEN-LAST:event_C_OsuServerActionPerformed
 
  private void B_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_LoginActionPerformed
-   int dialogResult = JOptionPane.showConfirmDialog(null, "It will Open a Web Browser \nAnd after you log in, it will take your cookies in order to Download on Osu! Server \nLike if you actually log in. Clicking YES you agree with this.", "Warning", JOptionPane.YES_NO_OPTION);
-   if (dialogResult == JOptionPane.YES_OPTION) {
-    Runnable runnable = new Runnable() {
-     public void run() {
-      String[] args = null;
-      Address = "https://osu.ppy.sh/forum/ucp.php?mode=login";
-      Browser.main(args);
-     }
-    };
-    Thread aux = new Thread(runnable);
-    aux.start();
-   }
+    JFrame_login.pack();
+    JFrame_login.setLocationRelativeTo(null);
+    JFrame_login.setVisible(true);
   }//GEN-LAST:event_B_LoginActionPerformed
 
  private void B_DirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DirectoryActionPerformed
@@ -1159,6 +1267,7 @@ public class JFrame extends javax.swing.JFrame {
        if (f.contains("Songs")) {
         Directory = route + File.separator + f;
         T_Directory.setText(Directory);
+        set("SongDirectory", Directory);
         found = true;
         break;
        }
@@ -1180,6 +1289,9 @@ public class JFrame extends javax.swing.JFrame {
      T_Error.setText("");
      B_2Download.setText("STOP");
      B_Pause.setText("||");
+     L_inAlready.setText("0");
+     L_Downloaded.setText("0");
+     L_inPages.setText("0");
      runnable = new Runnable() {
       public void run() {
        try {
@@ -1208,7 +1320,7 @@ public class JFrame extends javax.swing.JFrame {
         int toMonth = Ca_toMonth.getMonth() + 1;
         int fromMonth = Ca_fromMonth.getMonth() + 1;
         int toYear = Ca_toYear.getYear();
-        int fromYear = Ca_toYear.getYear();
+        int fromYear = Ca_fromYear.getYear();
         double Genre= C_Genre.getSelectedIndex();
         double Lang= C_Lang.getSelectedIndex();
         
@@ -1242,6 +1354,7 @@ public class JFrame extends javax.swing.JFrame {
         int page = 1;
         Song Song = null;
         boolean Search = false;
+        int alreadyTaken = 0;
         do {
          L_inPages.setText(page + "");
          JSONArray json;
@@ -1297,7 +1410,7 @@ public class JFrame extends javax.swing.JFrame {
          }
          P_Search.setValue(0);
          Song = new Song(ID, stat, date, creator, Beatmaps);
-         int alreadyTaken = 0;
+         
          boolean toDownload = false;
          for (int i = 0; i < Song.getID().size(); i++) {
           toDownload = false;
@@ -1305,13 +1418,17 @@ public class JFrame extends javax.swing.JFrame {
           L_Trying.setText(errorConection + "");
              for (File Song1 : Songs) {
                  String aux = Song1.toString();
-                 String IDSongFolder = aux.substring(aux.lastIndexOf(File.separator) + 1, aux.indexOf(" "));
-                 if (Song.getID().get(i).equals(IDSongFolder)) {
-                     alreadyTaken++;
-                     toDownload = true;
-                     L_inAlready.setText(alreadyTaken + "");
-                     break;
-                 } }
+                 String IDSongFolder;
+                 try{ 
+                    IDSongFolder= aux.substring(aux.lastIndexOf(File.separator) + 1, aux.indexOf(" "));
+                    if (Song.getID().get(i).equals(IDSongFolder)) {
+                        alreadyTaken++;
+                        toDownload = true;
+                        L_inAlready.setText(alreadyTaken + "");
+                        break;
+                    }
+                 }catch(Exception e){continue;}
+                 }
           if (toDownload == false) {
            for (int j = 0; j < Song.getBeatmap().get(i).size(); j++) {
             String dateSong = (String) Song.getDate().get(i);
@@ -1330,9 +1447,12 @@ public class JFrame extends javax.swing.JFrame {
             Double STAR = Double.parseDouble(Song.getBeatmap().get(i).get(j).getStar());
             Double GENRE = Double.parseDouble(Song.getBeatmap().get(i).get(j).getGenre());
             Double LANG = Double.parseDouble(Song.getBeatmap().get(i).get(j).getLang());
+            int fromYearMonth = Integer.valueOf(String.valueOf(fromYear)+((String.valueOf(fromMonth).length()==1)?0+""+fromMonth:fromMonth));
+            int toYearMonth = Integer.valueOf(String.valueOf(toYear)+((String.valueOf(toMonth).length()==1)?0+""+toMonth:toMonth));
+            int songYearMonth = Integer.valueOf(String.valueOf(SongYear)+((String.valueOf(SongMonth).length()==1)?0+""+SongMonth:SongMonth));
             if (
-             (((C_CalendarEnabled.isSelected()) ? (fromMonth <= SongMonth && SongMonth <= toMonth)
-                                && (fromYear <= SongYear && SongYear <= toYear) : true) != false) ? 
+             ((
+                (C_CalendarEnabled.isSelected()) ? (fromYearMonth <= songYearMonth && songYearMonth <=toYearMonth): true) != false) ? 
                 (((HPmax!=99999.0) ? (HPmin <= HP && HP <= HPmax) : (HPmin >= HP && HP <= HPmax)) 
                 && ((CSmax!=99999.0) ? (CSmin <= CS && CS <= CSmax) : (CSmin >= CS && CS <= CSmax)) 
                 && ((ODmax!=99999.0) ? (ODmin <= OD && OD <= ODmax) : (ODmin >= OD && OD <= ODmax)) 
@@ -1362,6 +1482,7 @@ public class JFrame extends javax.swing.JFrame {
 
        } catch (Exception e) {
                 errorFatal("FATAL");
+                e.printStackTrace();
                 errorFatal(e.toString());
                 errorFatal("--------------------------------------");  
        }
@@ -1422,13 +1543,19 @@ public class JFrame extends javax.swing.JFrame {
     len = in .read(buffer);
     if (len == 1024) {
      acu += len;
-     L_fileValue.setText(new DecimalFormat("#.##").format(acu * 0.000001));
+     BigDecimal a = new BigDecimal(acu * 0.000001);
+     BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+     L_fileValue.setText(roundOff+"");
     }
     Pro_ProgressBar.setValue(bytes);
     totalRead += len;
-    String speed = new DecimalFormat("#.##").format(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
+    BigDecimal a = new BigDecimal(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
+    BigDecimal speed = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+    //String speed = new DecimalFormat("#.##").format(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
     L_Second.setText(speed + "");
-    L_seconds.setText(new DecimalFormat("#.##").format(((Double.parseDouble(new DecimalFormat("#.##").format(size * 0.000001)) - Double.parseDouble(new DecimalFormat("#.##").format(acu * 0.000001))) * 0.1 / (Double.parseDouble(speed)) * 10000)));
+    BigDecimal b = new BigDecimal((((size*0.000001)-(acu*0.000001))*0.1)/(((NANOS_PER_SECOND/BYTES_PER_MIB*totalRead/(System.nanoTime()-start+1))*1000))*10000);
+    BigDecimal speed_total = b.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+    L_seconds.setText(speed_total+"");
     if (Thread.interrupted()) { in .close();
      out.close();
      aux.deleteOnExit();
@@ -1509,7 +1636,9 @@ public class JFrame extends javax.swing.JFrame {
             while ((inputLine = in.readLine()) != null)
                 a.append(inputLine);
             in.close();
-            a.toString();
+            a.toString().getBytes();
+            byte[] encoded = Base64.encodeBase64(APIcode.getBytes());
+            set("API", new String(encoded, "UTF-8"));
             L_apiHelp.setText("<html><font color=\"blue\">Correct API</font></html>");
         }
          }catch(Exception ex){
@@ -1559,6 +1688,55 @@ public class JFrame extends javax.swing.JFrame {
         }
         JFrame_Error.pack();
     }//GEN-LAST:event_B_fatalErrorsActionPerformed
+
+    private void B_CancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_CancelActionPerformed
+        JFrame_login.dispose();
+    }//GEN-LAST:event_B_CancelActionPerformed
+
+    private void B_ContinueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ContinueActionPerformed
+        login();
+    }//GEN-LAST:event_B_ContinueActionPerformed
+
+    private void login(){
+        try{
+            String username = T_User.getText();
+            String password =  Arrays.toString(T_Pass.getPassword()).
+                replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
+           Response res = Jsoup.connect("http://osu.ppy.sh/forum/ucp.php?mode=login")
+            .ignoreContentType(true)
+            .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")  
+            .referrer("http://www.google.com")   
+            .timeout(12000) 
+            .followRedirects(true)
+            .data("username", username)
+            .data("password", password)
+            .data("login", "Login")
+            .method(Method.POST)
+            .execute();
+            Map<String, String> cookies = res.cookies();
+           System.out.println("cookies= "+cookies);
+           if(cookies.toString().contains("last_login")){
+               L_AccountAcept.setText("<html><font color=\"blue\">Account Ready</font></html>");
+               Cookie = cookies.toString().replaceAll(",",";");
+               T_User.setText("");
+               T_Pass.setText("");
+               JFrame_login.dispose();
+           }else{
+               L_AccountAcept.setText("_______");
+               Cookie = "";
+               Alert("Failure login.");
+           }
+        }catch(Exception ex){ex.printStackTrace();}
+    }
+    private void T_PassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_PassKeyPressed
+        if (evt.getKeyCode()==KeyEvent.VK_ENTER)
+            login();
+    }//GEN-LAST:event_T_PassKeyPressed
+
+    private void T_UserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_UserKeyPressed
+       if (evt.getKeyCode()==KeyEvent.VK_ENTER)
+            login();
+    }//GEN-LAST:event_T_UserKeyPressed
 
  private void Alert(String Content) {
   JOptionPane.showMessageDialog(null, Content, "Alert!", JOptionPane.ERROR_MESSAGE);
@@ -1683,30 +1861,64 @@ public class JFrame extends javax.swing.JFrame {
  }
 
  public static JSONArray readJsonFromUrl(String url) throws Exception, JSONException {
-  InputStream is = null;
-  String jsonText="";
   try {
-   is = new URL(url.replaceAll(" ", "+")).openStream();
-   BufferedReader rd = new BufferedReader(new InputStreamReader(is, Charset.forName("UTF-8")));
-   jsonText = readAll(rd);
-   JSONArray json = new JSONArray(jsonText);
+    String aux = new JSONTokener(IOUtils.toString(new URL(url).openStream‌​())).nextValue().toString();
+    JSONArray json = new JSONArray(aux);
    return json;
   }catch(Exception ex){
       ex.printStackTrace();
       errorFatal("JSON URL "+url);
       errorFatal(ex.toString());
       errorFatal("--------------------------------------");  
+      readJsonFromUrl(url);
       return null;
-  }finally {
-   is.close();
   }
  }
-
-
- static void accountReady(String allCookieString) {
-  L_AccountAcept.setText("<html><font color=\"blue\">Account Ready</font></html>");
-  Cookie = allCookieString;
- }
+ 
+  public void load(){
+    try{
+        File Credentials = new File(System.getenv("APPDATA")+File.separator+"OsuMBD.conf");
+        Properties prop = new Properties();
+        if(!Credentials.exists()){
+             Credentials.createNewFile();
+             OutputStream conf = new FileOutputStream(System.getenv("APPDATA")+File.separator+"OsuMBD.conf");
+             prop.setProperty("SongDirectory", "");
+             prop.setProperty("API", "");
+             prop.store(conf, null);
+             conf.flush();
+             conf.close();
+        }else{
+            InputStream conf_load = new FileInputStream(System.getenv("APPDATA")+File.separator+"OsuMBD.conf");
+             prop.load(conf_load);
+             conf_load.close();
+             byte[] decoded = Base64.decodeBase64(prop.getProperty("API"));
+             T_Password.setText(new String(decoded, "UTF-8") + "\n");
+             String Direc = prop.getProperty("SongDirectory");
+             Directory = Direc;
+             T_Directory.setText(Directory);
+        }
+    }catch(Exception ex){
+        ex.printStackTrace();
+    }
+}
+  
+  public void set(String A, String B){
+    try{
+        String file = System.getenv("APPDATA")+File.separator+"OsuMBD.conf";
+        FileInputStream in = new FileInputStream(file);
+        Properties props = new Properties();
+        props.load(in);
+        in.close();
+        FileOutputStream out = new FileOutputStream(file);
+        props.setProperty(A, B);
+        props.store(out, null);
+        out.close();
+    }catch(Exception ex){
+        ex.printStackTrace();
+    }
+}
+ 
+ 
  
  public void block(){
      T_Password.setEnabled(false);
@@ -1773,66 +1985,7 @@ public class JFrame extends javax.swing.JFrame {
      C_Genre.setEnabled(true);        
      C_Lang.setEnabled(true); 
  }
- 
- 
- /*
- This will Activate after...
- public void clean(){
-     C_OsuServer.setSelected(true);
-     T_Password.setText("");
-     apiHelp();
-     L_AccountAcept.setText("_______");
-     T_Directory.setText("");
-     T_SearchTerm.setText("");
-     T_Difi.setText("");
-     T_Mapper.setText("");
-     T_STAR.setText("");
-     T_CS.setText("");
-     T_AR.setText("");
-     T_HP.setText("");
-     T_BPM.setText("");
-     T_OD.setText("");
-     T_Time.setText("");
-     C_Genre.setSelectedIndex(0);
-     C_Lang.setSelectedIndex(0);
-     C_CalendarEnabled.setSelected(false);
-     C_noVideo.setSelected(false);
-     C_STD.setSelected(false);
-     C_MANIA.setSelected(false);
-     C_CTB.setSelected(false);
-     C_TAIKO.setSelected(false);
-     C_Ranked.setSelected(false);        
-     C_Aprove.setSelected(false);        
-     C_Unraked.setSelected(false);        
-     C_Qualified.setSelected(false);
-     L_inFinded.setText("0");
-     L_inAlready.setText("0");
-     L_Downloaded.setText("0");
-     P_Search.setValue(0);
-     Pro_ProgressBar.setValue(0);
-     L_Trying.setText("0");
-     L_FileName.setText("_____");
-     L_fileValue.setText("0");
-     L_totalSize.setText("0");
-     L_server.setText("_");
-     L_seconds.setText("0");
-     L_Second.setText("0");
-     L_Errors.setText("0");
-     T_Error.setText("");
-     L_inPages.setText("0");
-     Ca_fromMonth.setMonth(Calendar.getInstance().get(Calendar.MONTH));
-     Ca_toMonth.setMonth(Calendar.getInstance().get(Calendar.MONTH));
-     Ca_fromYear.setYear(Calendar.getInstance().get(Calendar.YEAR));
-     Ca_toYear.setYear(Calendar.getInstance().get(Calendar.YEAR));
-     //Variables
-     model.removeAllElements();
-     model.addElement("Osu! Server");
-     model.addElement("Bloodcat Server");
-     List_prio.setModel(model);
-     prio = 0; errorConection = 0; Errors = 0; downloaded = 0;
-     
- }
- */
+
  @Override public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Icon.png"));
         return retValue;
@@ -1841,6 +1994,8 @@ public class JFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton B_2Download;
+    private javax.swing.JButton B_Cancel;
+    private javax.swing.JButton B_Continue;
     private javax.swing.JToggleButton B_Directory;
     private javax.swing.JButton B_Down;
     private javax.swing.JToggleButton B_Login;
@@ -1866,6 +2021,7 @@ public class JFrame extends javax.swing.JFrame {
     private com.toedter.calendar.JMonthChooser Ca_toMonth;
     private com.toedter.calendar.JYearChooser Ca_toYear;
     private javax.swing.JFrame JFrame_Error;
+    private javax.swing.JFrame JFrame_login;
     private javax.swing.JLabel L_AR;
     private javax.swing.JLabel L_AR1;
     public static javax.swing.JLabel L_AccountAcept;
@@ -1929,17 +2085,22 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JTextField T_HP;
     private javax.swing.JTextField T_Mapper;
     private javax.swing.JTextField T_OD;
+    private javax.swing.JPasswordField T_Pass;
     private javax.swing.JPasswordField T_Password;
     private javax.swing.JTextField T_STAR;
     private javax.swing.JTextField T_SearchTerm;
     private javax.swing.JTextField T_Time;
+    private javax.swing.JTextField T_User;
     public static javax.swing.JTextPane T_fatalError;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1949,7 +2110,50 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 
 
+}
+
+class URLBuilder {
+    private StringBuilder folders, params;
+    private String connType, host;
+
+    void setConnectionType(String conn) {
+        connType = conn;
+    }
+
+    URLBuilder(){
+        folders = new StringBuilder();
+        params = new StringBuilder();
+    }
+
+    URLBuilder(String host) {
+        this();
+        this.host = host;
+    }
+
+    void addSubfolder(String folder) {
+        folders.append("/");
+        folders.append(folder);
+    }
+
+    void addParameter(String parameter, String value) {
+        if(params.toString().length() > 0){params.append("&");}
+        params.append(parameter);
+        params.append("=");
+        params.append(value);
+    }
+
+    String getURL() throws URISyntaxException, MalformedURLException {
+        URI uri = new URI(connType, host, folders.toString(),
+                params.toString(), null);
+        return uri.toURL().toString();
+    }
+
+    String getRelativeURL() throws URISyntaxException, MalformedURLException{
+        URI uri = new URI(null, null, folders.toString(), params.toString(), null);
+        return uri.toString();
+    }
 }
