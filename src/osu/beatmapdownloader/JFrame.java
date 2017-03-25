@@ -15,11 +15,8 @@
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-*/
-
-
+ */
 package osu.beatmapdownloader;
-
 
 import java.awt.Cursor;
 import java.awt.Desktop;
@@ -63,86 +60,83 @@ import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.io.IOUtils;
 import org.json.JSONTokener;
 
-
 public class JFrame extends javax.swing.JFrame {
- DefaultListModel model = new DefaultListModel();
-  String Directory;
- Runnable runnable;
- Thread start;
- int prio = 0, errorConection = 0, Errors = 0, downloaded = 0;
- Double _ARmin, _ARmax;
- Double _CSmin, _CSmax;
- Double _HPmin, _HPmax;
- Double _BPMmin, _BPMmax;
- Double _Timemin, _Timemax;
- Double _ODmin, _ODmax;
- Double _STARmin, _STARmax;
- 
- static String Cookie;
 
- public JFrame() {
-     
-  initComponents();
-  goWebsite();
-  apiHelp();
-  dificultHelp();
-  model.addElement("Osu! Server");
-  model.addElement("Bloodcat Server");
-  List_prio.setModel(model);
-  Sc_fatalError.setVisible(false);
-  load();
-     
-  
+    DefaultListModel model = new DefaultListModel();
+    String Directory;
+    Runnable runnable;
+    Thread start;
+    int prio = 0, errorConection = 0, Errors = 0, downloaded = 0;
+    Double _ARmin, _ARmax;
+    Double _CSmin, _CSmax;
+    Double _HPmin, _HPmax;
+    Double _BPMmin, _BPMmax;
+    Double _Timemin, _Timemax;
+    Double _ODmin, _ODmax;
+    Double _STARmin, _STARmax;
 
+    static String Cookie;
 
+    public JFrame() {
 
+        initComponents();
+        goWebsite();
+        apiHelp();
+        dificultHelp();
+        model.addElement("Osu! Server");
+        model.addElement("Bloodcat Server");
+        List_prio.setModel(model);
+        Sc_fatalError.setVisible(false);
+        load();
 
- }
+    }
 
- public void goWebsite() {
-	String text="NewKey";
-        L_madeBy.setText("<html>Made by player: <a href=\"\">"+text+"</a></html>");
+    public void goWebsite() {
+        String text = "NewKey";
+        L_madeBy.setText("<html>Made by player: <a href=\"\">" + text + "</a></html>");
         L_madeBy.setCursor(new Cursor(Cursor.HAND_CURSOR));
         L_madeBy.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                    try {
-                            Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/u/637668"));
-                    } catch (URISyntaxException | IOException ex) {}
+                try {
+                    Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/u/637668"));
+                } catch (URISyntaxException | IOException ex) {
+                }
             }
         });
     }
- 
- public void apiHelp() {
-	String text="More Info";
-        L_apiHelp.setText("<html><a href=\"\">"+text+"</a></html>");
+
+    public void apiHelp() {
+        String text = "More Info";
+        L_apiHelp.setText("<html><a href=\"\">" + text + "</a></html>");
         L_apiHelp.setCursor(new Cursor(Cursor.HAND_CURSOR));
         L_apiHelp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                    try {
-                            Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/p/api"));
-                    } catch (URISyntaxException | IOException ex) {}
+                try {
+                    Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/p/api"));
+                } catch (URISyntaxException | IOException ex) {
+                }
             }
         });
     }
- 
- public void dificultHelp() {
-	String text="More Info";
-        L_difHelp.setText("<html><a href=\"\">"+text+"</a></html>");
+
+    public void dificultHelp() {
+        String text = "More Info";
+        L_difHelp.setText("<html><a href=\"\">" + text + "</a></html>");
         L_difHelp.setCursor(new Cursor(Cursor.HAND_CURSOR));
         L_difHelp.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                    try {
-                            Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/forum/t/178700&start=0"));
-                    } catch (URISyntaxException | IOException ex) {}
+                try {
+                    Desktop.getDesktop().browse(new URI("https://osu.ppy.sh/forum/t/178700&start=0"));
+                } catch (URISyntaxException | IOException ex) {
+                }
             }
         });
     }
- 
- 
- @SuppressWarnings("unchecked")
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -1198,467 +1192,500 @@ public class JFrame extends javax.swing.JFrame {
 
 
  private void B_UpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_UpActionPerformed
-   try {
-    int posc = List_prio.getSelectedIndex();
-    Object aux = model.get(posc);
-    model.remove(posc);
-    model.add(0, aux);
-   } catch (Exception e) {
-   errorFatal("B_UpActionPerformed");
-   errorFatal(e.toString());
-   errorFatal("--------------------------------------");
-   }
+     try {
+         int posc = List_prio.getSelectedIndex();
+         Object aux = model.get(posc);
+         model.remove(posc);
+         model.add(0, aux);
+     } catch (Exception e) {
+         errorFatal("B_UpActionPerformed");
+         errorFatal(e.toString());
+         errorFatal("--------------------------------------");
+     }
   }//GEN-LAST:event_B_UpActionPerformed
 
 
-
  private void B_DownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DownActionPerformed
-   try {
-    int posc = List_prio.getSelectedIndex();
-    Object aux = model.get(posc);
-    model.remove(posc);
-    model.add(1, aux);
-   } catch (Exception e) {
-    errorFatal("B_DownActionPerformed");
-    errorFatal(e.toString());
-    errorFatal("--------------------------------------");
-   }
+     try {
+         int posc = List_prio.getSelectedIndex();
+         Object aux = model.get(posc);
+         model.remove(posc);
+         model.add(1, aux);
+     } catch (Exception e) {
+         errorFatal("B_DownActionPerformed");
+         errorFatal(e.toString());
+         errorFatal("--------------------------------------");
+     }
   }//GEN-LAST:event_B_DownActionPerformed
 
 
  private void C_OsuServerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C_OsuServerActionPerformed
-   if (C_OsuServer.isSelected()) {
-    model.add(model.size(), "Osu! Server");
-    C_noVideo.setEnabled(true);
-   } else {
-       C_noVideo.setSelected(false);
-       C_noVideo.setEnabled(false);
-    for (int i = 0; i < model.size(); i++) {
-     if (model.get(i).equals("Osu! Server"))
-      model.remove(i);
-    }
-   }
+     if (C_OsuServer.isSelected()) {
+         model.add(model.size(), "Osu! Server");
+         C_noVideo.setEnabled(true);
+     } else {
+         C_noVideo.setSelected(false);
+         C_noVideo.setEnabled(false);
+         for (int i = 0; i < model.size(); i++) {
+             if (model.get(i).equals("Osu! Server")) {
+                 model.remove(i);
+             }
+         }
+     }
   }//GEN-LAST:event_C_OsuServerActionPerformed
 
  private void B_LoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_LoginActionPerformed
-    JFrame_login.pack();
-    JFrame_login.setLocationRelativeTo(null);
-    JFrame_login.setVisible(true);
+     JFrame_login.pack();
+     JFrame_login.setLocationRelativeTo(null);
+     JFrame_login.setVisible(true);
   }//GEN-LAST:event_B_LoginActionPerformed
 
  private void B_DirectoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_DirectoryActionPerformed
-   JFileChooser chooser;
-   
-   chooser = new JFileChooser();
-   chooser.setCurrentDirectory(new java.io.File("."));
-   chooser.setDialogTitle("Open Osu! Installation Directory");
-   chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-   chooser.setAcceptAllFileFilterUsed(false);
-   if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-    File route = chooser.getSelectedFile();
-    if (route.toString().endsWith("Songs")) {
-     Directory = route.getAbsolutePath();
-     T_Directory.setText(Directory);
-    } else {
-     if (route.isDirectory()) {
-      String[] Files = route.list();
-      boolean found = false;
-      for (String f: Files)
-       if (f.contains("Songs")) {
-        Directory = route + File.separator + f;
-        T_Directory.setText(Directory);
-        set("SongDirectory", Directory);
-        found = true;
-        break;
-       }
-      if (found == false) Alert("Incorrect Osu! Directory");
+     JFileChooser chooser;
+
+     chooser = new JFileChooser();
+     chooser.setCurrentDirectory(new java.io.File("."));
+     chooser.setDialogTitle("Open Osu! Installation Directory");
+     chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+     chooser.setAcceptAllFileFilterUsed(false);
+     if (chooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+         File route = chooser.getSelectedFile();
+         if (route.toString().endsWith("Songs")) {
+             Directory = route.getAbsolutePath();
+             T_Directory.setText(Directory);
+         } else if (route.isDirectory()) {
+             String[] Files = route.list();
+             boolean found = false;
+             for (String f : Files) {
+                 if (f.contains("Songs")) {
+                     Directory = route + File.separator + f;
+                     T_Directory.setText(Directory);
+                     set("SongDirectory", Directory);
+                     found = true;
+                     break;
+                 }
+             }
+             if (found == false) {
+                 Alert("Incorrect Osu! Directory");
+             }
+         }
      }
-    }
-   }
   }//GEN-LAST:event_B_DirectoryActionPerformed
 
  private void C_CalendarEnabledActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_C_CalendarEnabledActionPerformed
-   
+
   }//GEN-LAST:event_C_CalendarEnabledActionPerformed
 
  private void B_2DownloadActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_2DownloadActionPerformed
-   if (Validate()) {
-    if (B_2Download.getText().contains("Search & Download")) {
-     block();
-     T_fatalError.setText("");
-     T_Error.setText("");
-     B_2Download.setText("STOP");
-     B_Pause.setText("||");
-     L_inAlready.setText("0");
-     L_Downloaded.setText("0");
-     L_inPages.setText("0");
-     runnable = new Runnable() {
-      public void run() {
-       try {
-        String osuSongFolder = T_Directory.getText();
-        File SongFolder = new File(osuSongFolder);
-        File[] Songs = SongFolder.listFiles();
-        String APIcode = Arrays.toString(T_Password.getPassword()).
-                replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
-        String mapper = T_Mapper.getText().trim();
-        String difi = T_Difi.getText();
-        boolean modeSTD = C_STD.isSelected();
-        boolean modeMANIA = C_MANIA.isSelected();
-        boolean modeTAIKO = C_TAIKO.isSelected();
-        boolean modeCTB = C_CTB.isSelected();
-        boolean Ranked = C_Ranked.isSelected();
-        boolean Aprove = C_Aprove.isSelected();
-        boolean UnRanked = C_Unraked.isSelected();
-        boolean Qualified = C_Qualified.isSelected();
-        boolean Mapper = T_Mapper.getText().isEmpty();
-        boolean Star = T_STAR.getText().isEmpty();
-        boolean Difi = T_Difi.getText().isEmpty();
-        Double ARmin = _ARmin, ARmax = _ARmax, CSmin = _CSmin, CSmax = _CSmax;
-        Double HPmin = _HPmin, HPmax = _HPmax, BPMmin = _BPMmin, BPMmax = _BPMmax;
-        Double Timemin = _Timemin, Timemax = _Timemax, ODmin = _ODmin, ODmax = _ODmax;
-        Double STARmin = _STARmin, STARmax= _STARmax;
-        int toMonth = Ca_toMonth.getMonth() + 1;
-        int fromMonth = Ca_fromMonth.getMonth() + 1;
-        int toYear = Ca_toYear.getYear();
-        int fromYear = Ca_fromYear.getYear();
-        double Genre= C_Genre.getSelectedIndex();
-        double Lang= C_Lang.getSelectedIndex();
-        
-        String modes = "";
-        if (modeSTD)
-         modes += "0,";
-        if (modeTAIKO)
-         modes += "1,";
-        if (modeCTB)
-         modes += "2,";
-        if (modeMANIA)
-         modes += "3,";
-        if (modes.length() == 0)
-         modes = "";
-        else
-         modes = modes.substring(0, modes.length() - 1);
-        String status = "";
-        if (Ranked)
-         status += "1,";
-        if (Aprove)
-         status += "2,";
-        if (UnRanked)
-         status += "0,";
-        if (Qualified)
-         status += "3,";
-        if (status.length() == 0)
-         status = "";
-        else
-         status = status.substring(0, status.length() - 1);
-        String SearchTerm = T_SearchTerm.getText();
-        int page = 1;
-        Song Song = null;
-        boolean Search = false;
-        int alreadyTaken = 0;
-        do {
-         L_inPages.setText(page + "");
-         JSONArray json;
-         JSONArray jsonOsu = null;
-         try {
-          json = readJsonFromUrl("http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
-             System.out.println("URL= "+"http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
-          if (json.length() == 0) {
-           break;
-          }
-         } catch (Exception e) {
-                e.printStackTrace();
-                errorFatal("JSON "+"http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
-                errorFatal(e.toString());
-                errorFatal("--------------------------------------");  
-          Search = false;
-          continue;
-         }
-         ArrayList < String > ID = new ArrayList < > ();
-         ArrayList < String > stat = new ArrayList < > ();
-         ArrayList < String > date = new ArrayList < > ();
-         ArrayList < String > creator = new ArrayList < > ();
-         ArrayList < ArrayList < Beatmap >> Beatmaps = new ArrayList < ArrayList < Beatmap >> ();
-         for (int i = 0; i < json.length(); i++) {
-          String idMap = "", name = "", mode = "", hp = "", cs = "",genre = "";
-          String od = "", ar = "", bpm = "", length = "",star = "",lang = "";
-          String idbm= (String) json.getJSONObject(i).get("id");
-          ID.add(idbm);
-          stat.add((String) json.getJSONObject(i).get("status"));
-          date.add((String) json.getJSONObject(i).get("synced"));
-          creator.add((String) json.getJSONObject(i).get("creator"));
-          jsonOsu = readJsonFromUrl("http://osu.ppy.sh/api/get_beatmaps?k="+APIcode+"&s="+idbm);
-          L_inFinded.setText(i + "");
-          P_Search.setMaximum(jsonOsu.length());
-          ArrayList < Beatmap > beatmap = new ArrayList < Beatmap > ();
-          for (int j = 0; j < jsonOsu.length(); j++) {
-           P_Search.setValue(j);
-           idMap = jsonOsu.getJSONObject(j).getString("beatmap_id");
-           name = jsonOsu.getJSONObject(j).getString("version"); 
-           mode = jsonOsu.getJSONObject(j).getString("mode");
-           hp = jsonOsu.getJSONObject(j).getString("diff_drain");
-           cs = jsonOsu.getJSONObject(j).getString("diff_size");
-           od = jsonOsu.getJSONObject(j).getString("diff_overall");
-           ar = jsonOsu.getJSONObject(j).getString("diff_approach");
-           bpm = jsonOsu.getJSONObject(j).getString("bpm");
-           length = jsonOsu.getJSONObject(j).getString("total_length");
-           star = jsonOsu.getJSONObject(j).getString("difficultyrating");
-           genre = jsonOsu.getJSONObject(j).getString("genre_id");
-           lang = jsonOsu.getJSONObject(j).getString("language_id");
-           beatmap.add(new Beatmap(idMap, name, mode, hp, cs, od, ar, bpm, star, length, genre, lang));
-          }
-          Beatmaps.add(beatmap);
-         }
-         P_Search.setValue(0);
-         Song = new Song(ID, stat, date, creator, Beatmaps);
-         
-         boolean toDownload = false;
-         for (int i = 0; i < Song.getID().size(); i++) {
-          toDownload = false;
-          errorConection = 0;
-          L_Trying.setText(errorConection + "");
-             for (File Song1 : Songs) {
-                 String aux = Song1.toString();
-                 String IDSongFolder;
-                 try{ 
-                    IDSongFolder= aux.substring(aux.lastIndexOf(File.separator) + 1, aux.indexOf(" "));
-                    if (Song.getID().get(i).equals(IDSongFolder)) {
-                        alreadyTaken++;
-                        toDownload = true;
-                        L_inAlready.setText(alreadyTaken + "");
-                        break;
-                    }
-                 }catch(Exception e){continue;}
-                 }
-          if (toDownload == false) {
-           for (int j = 0; j < Song.getBeatmap().get(i).size(); j++) {
-            String dateSong = (String) Song.getDate().get(i);
-            dateSong = dateSong.substring(0, dateSong.indexOf(" "));
-            int SongYear = Integer.parseInt(dateSong.substring(0, dateSong.indexOf("-")));
-            String mo = dateSong.substring(dateSong.indexOf("-") + 1, dateSong.lastIndexOf("-"));
-            int SongMonth = Integer.parseInt(mo);
-            String CREATOR = Song.getCreator().get(i).toString();
-            String DIFI = Song.getBeatmap().get(i).get(j).getName();
-            Double HP = Double.parseDouble(Song.getBeatmap().get(i).get(j).getHp());
-            Double CS = Double.parseDouble(Song.getBeatmap().get(i).get(j).getCs());
-            Double OD = Double.parseDouble(Song.getBeatmap().get(i).get(j).getOd());
-            Double AR = Double.parseDouble(Song.getBeatmap().get(i).get(j).getAr());
-            Double BPM = Double.parseDouble(Song.getBeatmap().get(i).get(j).getBpm());
-            Double LEN = Double.parseDouble(Song.getBeatmap().get(i).get(j).getLength());
-            Double STAR = Double.parseDouble(Song.getBeatmap().get(i).get(j).getStar());
-            Double GENRE = Double.parseDouble(Song.getBeatmap().get(i).get(j).getGenre());
-            Double LANG = Double.parseDouble(Song.getBeatmap().get(i).get(j).getLang());
-            int fromYearMonth = Integer.valueOf(String.valueOf(fromYear)+((String.valueOf(fromMonth).length()==1)?0+""+fromMonth:fromMonth));
-            int toYearMonth = Integer.valueOf(String.valueOf(toYear)+((String.valueOf(toMonth).length()==1)?0+""+toMonth:toMonth));
-            int songYearMonth = Integer.valueOf(String.valueOf(SongYear)+((String.valueOf(SongMonth).length()==1)?0+""+SongMonth:SongMonth));
-            if (
-             ((
-                (C_CalendarEnabled.isSelected()) ? (fromYearMonth <= songYearMonth && songYearMonth <=toYearMonth): true) != false) ? 
-                (((HPmax!=99999.0) ? (HPmin <= HP && HP <= HPmax) : (HPmin >= HP && HP <= HPmax)) 
-                && ((CSmax!=99999.0) ? (CSmin <= CS && CS <= CSmax) : (CSmin >= CS && CS <= CSmax)) 
-                && ((ODmax!=99999.0) ? (ODmin <= OD && OD <= ODmax) : (ODmin >= OD && OD <= ODmax)) 
-                && ((ARmax!=99999.0) ? (ARmin <= AR && AR <= ARmax) : (ARmin >= AR && AR <= ODmax)) 
-                && ((BPMmax!=99999.0) ? (BPMmin <= BPM && BPM <= ARmax) : (BPMmin >= BPM && BPM <= BPMmax)) 
-                && ((Timemax!=99999.0) ? (Timemin <= LEN && LEN <= Timemax) : (Timemin >= LEN && LEN <= Timemax))
-                && ((!Star)?(STARmin <= STAR && STAR <= STARmax):true)
-                && ((!Mapper)?mapper.contains(CREATOR):true)
-                && ((!Difi)?difi.contains(DIFI):true)
-                && ((Genre==0)?true:GENRE==Genre)
-                && ((Lang==0)?true:LANG==Lang)
-                    ) : false
-            ) {
-             if (downloadSong((String) Song.getID().get(i), prio, Directory) == true) {
-              downloaded++;
-              L_Downloaded.setText(downloaded + "");
-              break;
-             } else {
-              break;
-             }
-            }
-           }
-          }
-         }
-         page++;
-        } while (Search == false);
+     if (Validate()) {
+         if (B_2Download.getText().contains("Search & Download")) {
+             block();
+             T_fatalError.setText("");
+             T_Error.setText("");
+             B_2Download.setText("STOP");
+             B_Pause.setText("||");
+             L_inAlready.setText("0");
+             L_Downloaded.setText("0");
+             L_inPages.setText("0");
+             runnable = new Runnable() {
+                 public void run() {
+                     try {
+                         String osuSongFolder = T_Directory.getText();
+                         File SongFolder = new File(osuSongFolder);
+                         File[] Songs = SongFolder.listFiles();
+                         String APIcode = Arrays.toString(T_Password.getPassword()).
+                                 replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
+                         String mapper = T_Mapper.getText().trim();
+                         String difi = T_Difi.getText();
+                         boolean modeSTD = C_STD.isSelected();
+                         boolean modeMANIA = C_MANIA.isSelected();
+                         boolean modeTAIKO = C_TAIKO.isSelected();
+                         boolean modeCTB = C_CTB.isSelected();
+                         boolean Ranked = C_Ranked.isSelected();
+                         boolean Aprove = C_Aprove.isSelected();
+                         boolean UnRanked = C_Unraked.isSelected();
+                         boolean Qualified = C_Qualified.isSelected();
+                         boolean Mapper = T_Mapper.getText().isEmpty();
+                         boolean Star = T_STAR.getText().isEmpty();
+                         boolean Difi = T_Difi.getText().isEmpty();
+                         Double ARmin = _ARmin, ARmax = _ARmax, CSmin = _CSmin, CSmax = _CSmax;
+                         Double HPmin = _HPmin, HPmax = _HPmax, BPMmin = _BPMmin, BPMmax = _BPMmax;
+                         Double Timemin = _Timemin, Timemax = _Timemax, ODmin = _ODmin, ODmax = _ODmax;
+                         Double STARmin = _STARmin, STARmax = _STARmax;
+                         int toMonth = Ca_toMonth.getMonth() + 1;
+                         int fromMonth = Ca_fromMonth.getMonth() + 1;
+                         int toYear = Ca_toYear.getYear();
+                         int fromYear = Ca_fromYear.getYear();
+                         double Genre = C_Genre.getSelectedIndex();
+                         double Lang = C_Lang.getSelectedIndex();
 
-       } catch (Exception e) {
-                errorFatal("FATAL");
-                e.printStackTrace();
-                errorFatal(e.toString());
-                errorFatal("--------------------------------------");  
-       }
-      }
-     };
-     start = new Thread(runnable);
-     start.start();
-    } else {
-     start.stop();
-     unblock();
-     B_2Download.setText("Search & Download");
-    }
-   }
+                         String modes = "";
+                         if (modeSTD) {
+                             modes += "0,";
+                         }
+                         if (modeTAIKO) {
+                             modes += "1,";
+                         }
+                         if (modeCTB) {
+                             modes += "2,";
+                         }
+                         if (modeMANIA) {
+                             modes += "3,";
+                         }
+                         if (modes.length() == 0) {
+                             modes = "";
+                         } else {
+                             modes = modes.substring(0, modes.length() - 1);
+                         }
+                         String status = "";
+                         if (Ranked) {
+                             status += "1,";
+                         }
+                         if (Aprove) {
+                             status += "2,";
+                         }
+                         if (UnRanked) {
+                             status += "0,";
+                         }
+                         if (Qualified) {
+                             status += "3,";
+                         }
+                         if (status.length() == 0) {
+                             status = "";
+                         } else {
+                             status = status.substring(0, status.length() - 1);
+                         }
+                         String SearchTerm = T_SearchTerm.getText();
+                         int page = 1;
+                         Song Song = null;
+                         boolean Search = false;
+                         int alreadyTaken = 0;
+                         do {
+                             L_inPages.setText(page + "");
+                             JSONArray json;
+                             JSONArray jsonOsu = null;
+                             try {
+                                 json = readJsonFromUrl("http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
+                                 //System.out.println("URL= "+"http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
+                                 if (json.length() == 0) {
+                                     break;
+                                 }
+                             } catch (Exception e) {
+                                 e.printStackTrace();
+                                 errorFatal("JSON " + "http://bloodcat.com/osu/?mod=json&m=" + modes + "&s=" + status + "&q=" + SearchTerm + "&p=" + page);
+                                 errorFatal(e.toString());
+                                 errorFatal("--------------------------------------");
+                                 Search = false;
+                                 continue;
+                             }
+                             ArrayList< String> ID = new ArrayList<>();
+                             ArrayList< String> stat = new ArrayList<>();
+                             ArrayList< String> date = new ArrayList<>();
+                             ArrayList< String> creator = new ArrayList<>();
+                             ArrayList< ArrayList< Beatmap>> Beatmaps = new ArrayList< ArrayList< Beatmap>>();
+                             for (int i = 0; i < json.length(); i++) {
+                                 String idMap = "", name = "", mode = "", hp = "", cs = "", genre = "";
+                                 String od = "", ar = "", bpm = "", length = "", star = "", lang = "";
+                                 String idbm = (String) json.getJSONObject(i).get("id");
+                                 ID.add(idbm);
+                                 stat.add((String) json.getJSONObject(i).get("status"));
+                                 date.add((String) json.getJSONObject(i).get("synced"));
+                                 creator.add((String) json.getJSONObject(i).get("creator"));
+                                 jsonOsu = readJsonFromUrl("http://osu.ppy.sh/api/get_beatmaps?k=" + APIcode + "&s=" + idbm);
+                                 L_inFinded.setText(i + "");
+                                 P_Search.setMaximum(jsonOsu.length());
+                                 ArrayList< Beatmap> beatmap = new ArrayList< Beatmap>();
+                                 for (int j = 0; j < jsonOsu.length(); j++) {
+                                     P_Search.setValue(j);
+                                     idMap = jsonOsu.getJSONObject(j).getString("beatmap_id");
+                                     name = jsonOsu.getJSONObject(j).getString("version");
+                                     mode = jsonOsu.getJSONObject(j).getString("mode");
+                                     hp = jsonOsu.getJSONObject(j).getString("diff_drain");
+                                     cs = jsonOsu.getJSONObject(j).getString("diff_size");
+                                     od = jsonOsu.getJSONObject(j).getString("diff_overall");
+                                     ar = jsonOsu.getJSONObject(j).getString("diff_approach");
+                                     bpm = jsonOsu.getJSONObject(j).getString("bpm");
+                                     length = jsonOsu.getJSONObject(j).getString("total_length");
+                                     star = jsonOsu.getJSONObject(j).getString("difficultyrating");
+                                     genre = jsonOsu.getJSONObject(j).getString("genre_id");
+                                     lang = jsonOsu.getJSONObject(j).getString("language_id");
+                                     beatmap.add(new Beatmap(idMap, name, mode, hp, cs, od, ar, bpm, star, length, genre, lang));
+                                 }
+                                 Beatmaps.add(beatmap);
+                             }
+                             P_Search.setValue(0);
+                             Song = new Song(ID, stat, date, creator, Beatmaps);
+
+                             boolean toDownload = false;
+                             for (int i = 0; i < Song.getID().size(); i++) {
+                                 toDownload = false;
+                                 errorConection = 0;
+                                 L_Trying.setText(errorConection + "");
+                                 for (File Song1 : Songs) {
+                                     String aux = Song1.toString();
+                                     String IDSongFolder;
+                                     try {
+                                         IDSongFolder = aux.substring(aux.lastIndexOf(File.separator) + 1, aux.indexOf(" "));
+                                         if (Song.getID().get(i).equals(IDSongFolder)) {
+                                             alreadyTaken++;
+                                             toDownload = true;
+                                             L_inAlready.setText(alreadyTaken + "");
+                                             break;
+                                         }
+                                     } catch (Exception e) {
+                                         continue;
+                                     }
+                                 }
+                                 if (toDownload == false) {
+                                     for (int j = 0; j < Song.getBeatmap().get(i).size(); j++) {
+                                         String dateSong = (String) Song.getDate().get(i);
+                                         dateSong = dateSong.substring(0, dateSong.indexOf(" "));
+                                         int SongYear = Integer.parseInt(dateSong.substring(0, dateSong.indexOf("-")));
+                                         String mo = dateSong.substring(dateSong.indexOf("-") + 1, dateSong.lastIndexOf("-"));
+                                         int SongMonth = Integer.parseInt(mo);
+                                         String CREATOR = Song.getCreator().get(i).toString();
+                                         String DIFI = Song.getBeatmap().get(i).get(j).getName();
+                                         Double HP = Double.parseDouble(Song.getBeatmap().get(i).get(j).getHp());
+                                         Double CS = Double.parseDouble(Song.getBeatmap().get(i).get(j).getCs());
+                                         Double OD = Double.parseDouble(Song.getBeatmap().get(i).get(j).getOd());
+                                         Double AR = Double.parseDouble(Song.getBeatmap().get(i).get(j).getAr());
+                                         Double BPM = Double.parseDouble(Song.getBeatmap().get(i).get(j).getBpm());
+                                         Double LEN = Double.parseDouble(Song.getBeatmap().get(i).get(j).getLength());
+                                         Double STAR = Double.parseDouble(Song.getBeatmap().get(i).get(j).getStar());
+                                         Double GENRE = Double.parseDouble(Song.getBeatmap().get(i).get(j).getGenre());
+                                         Double LANG = Double.parseDouble(Song.getBeatmap().get(i).get(j).getLang());
+                                         int fromYearMonth = Integer.valueOf(String.valueOf(fromYear) + ((String.valueOf(fromMonth).length() == 1) ? 0 + "" + fromMonth : fromMonth));
+                                         int toYearMonth = Integer.valueOf(String.valueOf(toYear) + ((String.valueOf(toMonth).length() == 1) ? 0 + "" + toMonth : toMonth));
+                                         int songYearMonth = Integer.valueOf(String.valueOf(SongYear) + ((String.valueOf(SongMonth).length() == 1) ? 0 + "" + SongMonth : SongMonth));
+                                         if ((((C_CalendarEnabled.isSelected()) ? (fromYearMonth <= songYearMonth && songYearMonth <= toYearMonth) : true) != false)
+                                                 ? (((HPmax != 99999.0) ? (HPmin <= HP && HP <= HPmax) : (HPmin >= HP && HP <= HPmax))
+                                                 && ((CSmax != 99999.0) ? (CSmin <= CS && CS <= CSmax) : (CSmin >= CS && CS <= CSmax))
+                                                 && ((ODmax != 99999.0) ? (ODmin <= OD && OD <= ODmax) : (ODmin >= OD && OD <= ODmax))
+                                                 && ((ARmax != 99999.0) ? (ARmin <= AR && AR <= ARmax) : (ARmin >= AR && AR <= ODmax))
+                                                 && ((BPMmax != 99999.0) ? (BPMmin <= BPM && BPM <= ARmax) : (BPMmin >= BPM && BPM <= BPMmax))
+                                                 && ((Timemax != 99999.0) ? (Timemin <= LEN && LEN <= Timemax) : (Timemin >= LEN && LEN <= Timemax))
+                                                 && ((!Star) ? (STARmin <= STAR && STAR <= STARmax) : true)
+                                                 && ((!Mapper) ? mapper.contains(CREATOR) : true)
+                                                 && ((!Difi) ? difi.contains(DIFI) : true)
+                                                 && ((Genre == 0) ? true : GENRE == Genre)
+                                                 && ((Lang == 0) ? true : LANG == Lang)) : false) {
+                                             if (downloadSong((String) Song.getID().get(i), prio, Directory) == true) {
+                                                 downloaded++;
+                                                 L_Downloaded.setText(downloaded + "");
+                                                 break;
+                                             } else {
+                                                 break;
+                                             }
+                                         }
+                                     }
+                                 }
+                             }
+                             page++;
+                         } while (Search == false);
+
+                     } catch (Exception e) {
+                         errorFatal("FATAL");
+                         e.printStackTrace();
+                         errorFatal(e.toString());
+                         errorFatal("--------------------------------------");
+                     }
+                 }
+             };
+             start = new Thread(runnable);
+             start.start();
+         } else {
+             start.stop();
+             unblock();
+             B_2Download.setText("Search & Download");
+         }
+     }
   }//GEN-LAST:event_B_2DownloadActionPerformed
 
- public boolean downloadSong(String idMap, int prio,String Directory) {
-  String fileName = null;
-  try {
-   String url = "";
-   if (model.get(prio).toString().contains("Blood")) {
-    url = "http://bloodcat.com/osu/d/" + idMap;
-    L_server.setText("Bloodcat Server");
-   } else {
-    if (C_OsuServer.isSelected() && model.get(0).toString().contains("Osu")) {
-      if(C_noVideo.isSelected())
-        url = "http://osu.ppy.sh/d/" + idMap+"n";
-      else
-         url = "http://osu.ppy.sh/d/" + idMap; 
-     L_server.setText("Osu! Server");
+    public boolean downloadSong(String idMap, int prio, String Directory) {
+        String fileName = null;
+        try {
+            String url = "";
+            if (model.get(prio).toString().contains("Blood")) {
+                url = "http://bloodcat.com/osu/d/" + idMap;
+                L_server.setText("Bloodcat Server");
+            } else if (C_OsuServer.isSelected() && model.get(0).toString().contains("Osu")) {
+                if (C_noVideo.isSelected()) {
+                    url = "http://osu.ppy.sh/d/" + idMap + "n";
+                } else {
+                    url = "http://osu.ppy.sh/d/" + idMap;
+                }
+                L_server.setText("Osu! Server");
+            }
+            long start = System.nanoTime();
+            long totalRead = 0;
+            final double NANOS_PER_SECOND = 1000000000.0;
+            final double BYTES_PER_MIB = 1024 * 1024;
+            URLConnection request = null;
+            request = new URL(url).openConnection();
+            request.setRequestProperty("Cookie", url.contains("ppy") ? Cookie : "");
+            request.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
+            InputStream in = request.getInputStream();
+            String raw = request.getHeaderField("Content-Disposition");
+            fileName = raw.split("=")[1].replaceAll("\"", "").replaceAll("; filename*", "");
+            request.getContentLength();
+            double size = request.getContentLength();
+            File aux = File.createTempFile(
+                    fileName.replaceAll("\\*", "")
+                    .replaceAll(";", "")
+                    .replaceAll("\\*", "")
+                    .replaceAll(":", "")
+                    .replaceAll("\\?", "")
+                    .replaceAll("/", "")
+                    .replaceAll("<", "")
+                    .replaceAll(">", "")
+                    .replaceAll("|", ""), ".osz");
+            L_FileName.setText(fileName.replaceAll("\\*", "").replaceAll(";", ""));
+            FileOutputStream out = new FileOutputStream(aux);
+            byte[] buffer = new byte[1024];
+            int len = in.read(buffer);
+            L_totalSize.setText((String) new DecimalFormat("#.##").format(size * 0.000001) + " Mb");
+            int bytes = 0;
+            Pro_ProgressBar.setMinimum(0);
+            Pro_ProgressBar.setMaximum((int) (size / 1000));
+            long acu = 0;
+            while (len != -1) {
+                bytes++;
+                out.write(buffer, 0, len);
+                len = in.read(buffer);
+                if (len == 1024) {
+                    acu += len;
+                    BigDecimal a = new BigDecimal(acu * 0.000001);
+                    BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                    L_fileValue.setText(roundOff + "");
+                }
+                Pro_ProgressBar.setValue(bytes);
+                totalRead += len;
+                BigDecimal a = new BigDecimal(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
+                BigDecimal speed = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                //String speed = new DecimalFormat("#.##").format(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
+                L_Second.setText(speed + "");
+                BigDecimal b = new BigDecimal((((size * 0.000001) - (acu * 0.000001)) * 0.1) / (((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000)) * 10000);
+                BigDecimal speed_total = b.setScale(2, BigDecimal.ROUND_HALF_EVEN);
+                L_seconds.setText(speed_total + "");
+                if (Thread.interrupted()) {
+                    in.close();
+                    out.close();
+                    aux.deleteOnExit();
+                    throw new InterruptedException();
+                }
+            }
+            in.close();
+            out.close();
+            FileUtils.copyFile(aux, new File(Directory + File.separator + fileName
+                    .replaceAll("\\*", "")
+                    .replaceAll(";", "")
+                    .replaceAll(":", "")
+                    .replaceAll("\\?", "")
+                    .replaceAll("/", "")
+                    .replaceAll("<", "")
+                    .replaceAll(">", "")
+                    .replaceAll("|", "")
+            ));
+            aux.deleteOnExit();
+            return true;
+        } catch (Exception e) {
+            errorFatal("DOWNLOADING");
+            errorFatal(e.toString());
+            errorFatal("--------------------------------------");
+            prio++;
+            errorConection++;
+            L_Trying.setText(errorConection + "");
+            int limitTry = 3;
+            if (errorConection >= limitTry) {
+                Errors++;
+                L_Errors.setText(Errors + "");
+                errorDownload("-The connection to this Beatmap was failed, '" + errorConection + "' times, it was skipped.");
+                errorDownload("--The filename is '" + fileName + "', with the id '" + idMap + "'. ");
+                errorDownload("----------------------");
+            } else {
+                if (model.getSize() == prio) {
+                    prio = 0;
+                }
+                downloadSong(idMap, prio, Directory);
+            }
+            return false;
+        }
     }
-   }
-   long start = System.nanoTime();
-   long totalRead = 0;
-   final double NANOS_PER_SECOND = 1000000000.0;
-   final double BYTES_PER_MIB = 1024 * 1024;
-   URLConnection request = null;
-   request = new URL(url).openConnection();
-   request.setRequestProperty("Cookie", url.contains("ppy") ? Cookie : "");
-   request.setRequestProperty("User-Agent", "Mozilla/5.0 (Macintosh; U; Intel Mac OS X 10.4; en-US; rv:1.9.2.2) Gecko/20100316 Firefox/3.6.2");
-   InputStream in = request.getInputStream();
-   String raw = request.getHeaderField("Content-Disposition");
-   fileName = raw.split("=")[1].replaceAll("\"", "").replaceAll("; filename*", "");
-   request.getContentLength();
-   double size = request.getContentLength();
-   File aux = File.createTempFile(fileName.replaceAll("\\*", "").replaceAll(";", ""), ".osz");
-   L_FileName.setText(fileName.replaceAll("\\*", "").replaceAll(";", ""));
-   FileOutputStream out = new FileOutputStream(aux);
-   byte[] buffer = new byte[1024];
-   int len = in .read(buffer);
-   L_totalSize.setText((String) new DecimalFormat("#.##").format(size * 0.000001) + " Mb");
-   int bytes = 0;
-   Pro_ProgressBar.setMinimum(0);
-   Pro_ProgressBar.setMaximum((int)(size / 1000));
-   long acu = 0;
-   while (len != -1) {
-    bytes++;
-    out.write(buffer, 0, len);
-    len = in .read(buffer);
-    if (len == 1024) {
-     acu += len;
-     BigDecimal a = new BigDecimal(acu * 0.000001);
-     BigDecimal roundOff = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-     L_fileValue.setText(roundOff+"");
-    }
-    Pro_ProgressBar.setValue(bytes);
-    totalRead += len;
-    BigDecimal a = new BigDecimal(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
-    BigDecimal speed = a.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-    //String speed = new DecimalFormat("#.##").format(((NANOS_PER_SECOND / BYTES_PER_MIB * totalRead / (System.nanoTime() - start + 1)) * 1000));
-    L_Second.setText(speed + "");
-    BigDecimal b = new BigDecimal((((size*0.000001)-(acu*0.000001))*0.1)/(((NANOS_PER_SECOND/BYTES_PER_MIB*totalRead/(System.nanoTime()-start+1))*1000))*10000);
-    BigDecimal speed_total = b.setScale(2, BigDecimal.ROUND_HALF_EVEN);
-    L_seconds.setText(speed_total+"");
-    if (Thread.interrupted()) { in .close();
-     out.close();
-     aux.deleteOnExit();
-     throw new InterruptedException();
-    }
-   } in .close();
-   out.close();
-   FileUtils.copyFile(aux, new File(Directory + File.separator + fileName.replaceAll("\\*", "").replaceAll(";", "")));
-   aux.deleteOnExit();
-   return true;
-  } catch (Exception e) {
-    errorFatal("DOWNLOADING");
-    errorFatal(e.toString());
-    errorFatal("--------------------------------------");  
-   prio++;
-   errorConection++;
-   L_Trying.setText(errorConection + "");
-   int limitTry = 3;
-   if (errorConection >= limitTry) {
-    Errors++;
-    L_Errors.setText(Errors + "");
-    errorDownload("-The connection to this Beatmap was failed, '" + errorConection + "' times, it was skipped.");
-    errorDownload("--The filename is '" + fileName + "', with the id '" + idMap + "'. ");
-    errorDownload("----------------------");
-   } else {
-    if (model.getSize() == prio)
-     prio = 0;
-    downloadSong(idMap, prio,Directory);
-   }
-   return false;
-  }
- }
- 
+
 
  private void B_ShowErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_ShowErrorsActionPerformed
-   JFrame_Error.pack();
-   JFrame_Error.setTitle("Errors");
-   JFrame_Error.setLocationRelativeTo(null);
-   JFrame_Error.setVisible(true);
+     JFrame_Error.pack();
+     JFrame_Error.setTitle("Errors");
+     JFrame_Error.setLocationRelativeTo(null);
+     JFrame_Error.setVisible(true);
   }//GEN-LAST:event_B_ShowErrorsActionPerformed
 
  private void B_PauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_PauseActionPerformed
-   try {
-    start.isAlive();
-    if (B_Pause.getText().equals("||")) {
      try {
-      start.suspend();
-     } catch (Exception e) {}
-     B_Pause.setText(">");
-    } else {
-     try {
-      start.resume();
-     } catch (Exception e) {}
-     B_Pause.setText("||");
-    }
-   } catch (Exception e) {
-    B_Pause.setText("||");
-   }
+         start.isAlive();
+         if (B_Pause.getText().equals("||")) {
+             try {
+                 start.suspend();
+             } catch (Exception e) {
+             }
+             B_Pause.setText(">");
+         } else {
+             try {
+                 start.resume();
+             } catch (Exception e) {
+             }
+             B_Pause.setText("||");
+         }
+     } catch (Exception e) {
+         B_Pause.setText("||");
+     }
   }//GEN-LAST:event_B_PauseActionPerformed
 
     private void C_GenreItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_C_GenreItemStateChanged
-        if(C_Genre.getSelectedIndex()==7)
+        if (C_Genre.getSelectedIndex() == 7) {
             C_Genre.setSelectedIndex(8);
+        }
     }//GEN-LAST:event_C_GenreItemStateChanged
 
     private void T_PasswordFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_T_PasswordFocusLost
         try {
-        JSONArray json;
-        String APIcode = Arrays.toString(T_Password.getPassword()).
-                replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
-        if(!APIcode.isEmpty()){
-            URL url = new URL("https://osu.ppy.sh/api/get_user?k="+APIcode);
-            URLConnection urlConn = url.openConnection();
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    urlConn.getInputStream(), "UTF-8"));
-            String inputLine;
-            StringBuilder a = new StringBuilder();
-            while ((inputLine = in.readLine()) != null)
-                a.append(inputLine);
-            in.close();
-            a.toString().getBytes();
-            byte[] encoded = Base64.encodeBase64(APIcode.getBytes());
-            set("API", new String(encoded, "UTF-8"));
-            L_apiHelp.setText("<html><font color=\"blue\">Correct API</font></html>");
+            JSONArray json;
+            String APIcode = Arrays.toString(T_Password.getPassword()).
+                    replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
+            if (!APIcode.isEmpty()) {
+                URL url = new URL("https://osu.ppy.sh/api/get_user?k=" + APIcode);
+                URLConnection urlConn = url.openConnection();
+                BufferedReader in = new BufferedReader(new InputStreamReader(
+                        urlConn.getInputStream(), "UTF-8"));
+                String inputLine;
+                StringBuilder a = new StringBuilder();
+                while ((inputLine = in.readLine()) != null) {
+                    a.append(inputLine);
+                }
+                in.close();
+                a.toString().getBytes();
+                byte[] encoded = Base64.encodeBase64(APIcode.getBytes());
+                set("API", new String(encoded, "UTF-8"));
+                L_apiHelp.setText("<html><font color=\"blue\">Correct API</font></html>");
+            }
+        } catch (Exception ex) {
+            apiHelp();
+            Alert("Please provide a valid API key.");
         }
-         }catch(Exception ex){
-             apiHelp();
-         Alert("Please provide a valid API key.");
-         }
     }//GEN-LAST:event_T_PasswordFocusLost
 
     private void C_CalendarEnabledItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_C_CalendarEnabledItemStateChanged
         if (C_CalendarEnabled.isSelected()) {
-        Ca_fromMonth.setEnabled(true);
-        Ca_fromYear.setEnabled(true);
-        Ca_toMonth.setEnabled(true);
-        Ca_toYear.setEnabled(true);
-       } else {
-        Ca_fromMonth.setEnabled(false);
-        Ca_fromYear.setEnabled(false);
-        Ca_toMonth.setEnabled(false);
-        Ca_toYear.setEnabled(false);
-       }
+            Ca_fromMonth.setEnabled(true);
+            Ca_fromYear.setEnabled(true);
+            Ca_toMonth.setEnabled(true);
+            Ca_toYear.setEnabled(true);
+        } else {
+            Ca_fromMonth.setEnabled(false);
+            Ca_fromYear.setEnabled(false);
+            Ca_toMonth.setEnabled(false);
+            Ca_toYear.setEnabled(false);
+        }
     }//GEN-LAST:event_C_CalendarEnabledItemStateChanged
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -1666,22 +1693,22 @@ public class JFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-     try {
-         Desktop.getDesktop().browse(new URI("https://github.com/GarciaMiguelangel/Osu-Masive-Beatmap-Downloader/wiki"));
-     } catch (Exception e) {
-        errorFatal("To Git");
-        errorFatal(e.toString());
-        errorFatal("--------------------------------------");  
-     }
+        try {
+            Desktop.getDesktop().browse(new URI("https://github.com/GarciaMiguelangel/Osu-Masive-Beatmap-Downloader/wiki"));
+        } catch (Exception e) {
+            errorFatal("To Git");
+            errorFatal(e.toString());
+            errorFatal("--------------------------------------");
+        }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void B_fatalErrorsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_B_fatalErrorsActionPerformed
-       // T_fatalError.
-        if(B_fatalErrors.getText().contains("Show Fatal Errors")){
+        // T_fatalError.
+        if (B_fatalErrors.getText().contains("Show Fatal Errors")) {
             B_fatalErrors.setText("Hide Fatal Errors");
             Sc_fatalError.setVisible(true);
             Sc_Error.setVisible(false);
-        }else{
+        } else {
             B_fatalErrors.setText("Show Fatal Errors");
             Sc_fatalError.setVisible(false);
             Sc_Error.setVisible(true);
@@ -1697,299 +1724,303 @@ public class JFrame extends javax.swing.JFrame {
         login();
     }//GEN-LAST:event_B_ContinueActionPerformed
 
-    private void login(){
-        try{
+    private void login() {
+        try {
             String username = T_User.getText();
-            String password =  Arrays.toString(T_Pass.getPassword()).
-                replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
-           Response res = Jsoup.connect("http://osu.ppy.sh/forum/ucp.php?mode=login")
-            .ignoreContentType(true)
-            .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")  
-            .referrer("http://www.google.com")   
-            .timeout(12000) 
-            .followRedirects(true)
-            .data("username", username)
-            .data("password", password)
-            .data("login", "Login")
-            .method(Method.POST)
-            .execute();
+            String password = Arrays.toString(T_Pass.getPassword()).
+                    replaceAll(", ", "").replaceAll("\\[", "").replaceAll("]", "");
+            Response res = Jsoup.connect("http://osu.ppy.sh/forum/ucp.php?mode=login")
+                    .ignoreContentType(true)
+                    .userAgent("Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0")
+                    .referrer("http://www.google.com")
+                    .timeout(12000)
+                    .followRedirects(true)
+                    .data("username", username)
+                    .data("password", password)
+                    .data("login", "Login")
+                    .method(Method.POST)
+                    .execute();
             Map<String, String> cookies = res.cookies();
-           System.out.println("cookies= "+cookies);
-           if(cookies.toString().contains("last_login")){
-               L_AccountAcept.setText("<html><font color=\"blue\">Account Ready</font></html>");
-               Cookie = cookies.toString().replaceAll(",",";");
-               T_User.setText("");
-               T_Pass.setText("");
-               JFrame_login.dispose();
-           }else{
-               L_AccountAcept.setText("_______");
-               Cookie = "";
-               Alert("Failure login.");
-           }
-        }catch(Exception ex){ex.printStackTrace();}
+            //System.out.println("cookies= "+cookies);
+            if (cookies.toString().contains("last_login")) {
+                L_AccountAcept.setText("<html><font color=\"blue\">Account Ready</font></html>");
+                Cookie = cookies.toString().replaceAll(",", ";");
+                T_User.setText("");
+                T_Pass.setText("");
+                JFrame_login.dispose();
+            } else {
+                L_AccountAcept.setText("_______");
+                Cookie = "";
+                Alert("Failure login.");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
     }
     private void T_PassKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_PassKeyPressed
-        if (evt.getKeyCode()==KeyEvent.VK_ENTER)
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login();
+        }
     }//GEN-LAST:event_T_PassKeyPressed
 
     private void T_UserKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_T_UserKeyPressed
-       if (evt.getKeyCode()==KeyEvent.VK_ENTER)
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
             login();
+        }
     }//GEN-LAST:event_T_UserKeyPressed
 
- private void Alert(String Content) {
-  JOptionPane.showMessageDialog(null, Content, "Alert!", JOptionPane.ERROR_MESSAGE);
- }
+    private void Alert(String Content) {
+        JOptionPane.showMessageDialog(null, Content, "Alert!", JOptionPane.ERROR_MESSAGE);
+    }
 
- private void errorDownload(String Content) {
-  T_Error.setText(T_Error.getText() + Content + " \n");
-  int len = T_Error.getDocument().getLength();
-  T_Error.setCaretPosition(len);
- }
- 
- 
- static void errorFatal(String Content) {
-  T_fatalError.setText(T_fatalError.getText() + Content + " \n");
-  int len = T_fatalError.getDocument().getLength();
-  T_fatalError.setCaretPosition(len);
- }
+    private void errorDownload(String Content) {
+        T_Error.setText(T_Error.getText() + Content + " \n");
+        int len = T_Error.getDocument().getLength();
+        T_Error.setCaretPosition(len);
+    }
 
- private boolean Validate() {
-  try {
-        String aux="";
-        if (T_AR.getText().length() != 0 && T_AR.getText().contains("-")){
-            aux = T_AR.getText();
-            _ARmin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _ARmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-        }else{
-            _ARmin=(T_AR.getText().length()==0)? 99999.0:Double.parseDouble(T_AR.getText());
-            _ARmax = 99999.0;
-        }
-        
-        if (T_CS.getText().length() != 0 && T_CS.getText().contains("-")){
-            aux = T_CS.getText();
-            _CSmin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _CSmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-        }else{
-            _CSmin=(T_CS.getText().length()==0)? 99999.0:Double.parseDouble(T_CS.getText());
-            _CSmax = 99999.0;
-        }
-        
-        if (T_HP.getText().length() != 0 && T_HP.getText().contains("-")){
-            aux = T_HP.getText();
-            _HPmin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _HPmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-        }else{
-            _HPmin=(T_HP.getText().length()==0)? 99999.0:Double.parseDouble(T_HP.getText());
-            _HPmax = 99999.0;
-        }
-        
-        if (T_BPM.getText().length() != 0 && T_BPM.getText().contains("-")){
-            aux = T_BPM.getText();
-            _BPMmin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _BPMmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-        }else{
-            _BPMmin=(T_BPM.getText().length()==0)? 99999.0:Double.parseDouble(T_BPM.getText());
-            _BPMmax = 99999.0;
-        }
-        
-        if (T_Time.getText().length() != 0 && T_Time.getText().contains("-")){
-            aux = T_Time.getText();
-            _Timemin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _Timemax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-        }else{
-            _Timemin=(T_Time.getText().length()==0)? 99999.0:Double.parseDouble(T_Time.getText());
-            _Timemax = 99999.0;
-        }
-        
-        if (T_OD.getText().length() != 0 && T_OD.getText().contains("-")){
-            aux = T_OD.getText();
-            _ODmin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _ODmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-        }else{
-            _ODmin=(T_OD.getText().length()==0)? 99999.0:Double.parseDouble(T_OD.getText());
-            _ODmax = 99999.0;
-        }
-        
-        if (T_STAR.getText().length() != 0 && T_STAR.getText().contains("-")){
-            aux = T_STAR.getText();
-            _STARmin = Double.parseDouble(aux.substring(0,aux.indexOf("-")));
-            _STARmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-")+1));
-            if(_STARmin>_STARmax) throw new Exception("Bigger");
-        }else{
-            _STARmin=(T_STAR.getText().length()==0)? 99999.0:Double.parseDouble(T_STAR.getText());
-            _STARmax = 99999.0;
-        }
+    static void errorFatal(String Content) {
+        T_fatalError.setText(T_fatalError.getText() + Content + " \n");
+        int len = T_fatalError.getDocument().getLength();
+        T_fatalError.setCaretPosition(len);
+    }
 
-   if (T_Directory.getText().length()==0)
-    throw new Exception("Directory");
-   if (C_OsuServer.isSelected())
-    if (L_AccountAcept.getText().contains("_"))
-     throw new Exception("Osu Account");
-   if (T_Password.getPassword().length==0)
-       throw new Exception("Password");
-   return true;
-  } catch (Exception e) {
-   if (e.toString().contains("Directory")) {
-    Alert("Open a correct Song Directory.");
-   } else {
-    if (e.toString().contains("Osu Account")) {
-     Alert("You selected Osu! Server, Ingress a Correct Osu! Account, Click Login.");
-    } else {
-        if (e.toString().contains("Bigger")) {
-            Alert("A Minium value is bigger than the Maximun value.");
-        }else{
-            if (e.toString().contains("Password")) {
+    private boolean Validate() {
+        try {
+            String aux = "";
+            if (T_AR.getText().length() != 0 && T_AR.getText().contains("-")) {
+                aux = T_AR.getText();
+                _ARmin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _ARmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+            } else {
+                _ARmin = (T_AR.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_AR.getText());
+                _ARmax = 99999.0;
+            }
+
+            if (T_CS.getText().length() != 0 && T_CS.getText().contains("-")) {
+                aux = T_CS.getText();
+                _CSmin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _CSmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+            } else {
+                _CSmin = (T_CS.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_CS.getText());
+                _CSmax = 99999.0;
+            }
+
+            if (T_HP.getText().length() != 0 && T_HP.getText().contains("-")) {
+                aux = T_HP.getText();
+                _HPmin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _HPmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+            } else {
+                _HPmin = (T_HP.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_HP.getText());
+                _HPmax = 99999.0;
+            }
+
+            if (T_BPM.getText().length() != 0 && T_BPM.getText().contains("-")) {
+                aux = T_BPM.getText();
+                _BPMmin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _BPMmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+            } else {
+                _BPMmin = (T_BPM.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_BPM.getText());
+                _BPMmax = 99999.0;
+            }
+
+            if (T_Time.getText().length() != 0 && T_Time.getText().contains("-")) {
+                aux = T_Time.getText();
+                _Timemin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _Timemax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+            } else {
+                _Timemin = (T_Time.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_Time.getText());
+                _Timemax = 99999.0;
+            }
+
+            if (T_OD.getText().length() != 0 && T_OD.getText().contains("-")) {
+                aux = T_OD.getText();
+                _ODmin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _ODmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+            } else {
+                _ODmin = (T_OD.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_OD.getText());
+                _ODmax = 99999.0;
+            }
+
+            if (T_STAR.getText().length() != 0 && T_STAR.getText().contains("-")) {
+                aux = T_STAR.getText();
+                _STARmin = Double.parseDouble(aux.substring(0, aux.indexOf("-")));
+                _STARmax = Double.parseDouble(aux.substring(aux.lastIndexOf("-") + 1));
+                if (_STARmin > _STARmax) {
+                    throw new Exception("Bigger");
+                }
+            } else {
+                _STARmin = (T_STAR.getText().length() == 0) ? 99999.0 : Double.parseDouble(T_STAR.getText());
+                _STARmax = 99999.0;
+            }
+
+            if (T_Directory.getText().length() == 0) {
+                throw new Exception("Directory");
+            }
+            if (C_OsuServer.isSelected()) {
+                if (L_AccountAcept.getText().contains("_")) {
+                    throw new Exception("Osu Account");
+                }
+            }
+            if (T_Password.getPassword().length == 0) {
+                throw new Exception("Password");
+            }
+            return true;
+        } catch (Exception e) {
+            if (e.toString().contains("Directory")) {
+                Alert("Open a correct Song Directory.");
+            } else if (e.toString().contains("Osu Account")) {
+                Alert("You selected Osu! Server, Ingress a Correct Osu! Account, Click Login.");
+            } else if (e.toString().contains("Bigger")) {
+                Alert("A Minium value is bigger than the Maximun value.");
+            } else if (e.toString().contains("Password")) {
                 Alert("Enter the Osu API code.");
-            }else
+            } else {
                 Alert("Only Numbers.");
-       }
-   }
-  }
-   return false;
- }
- }
-
- private static String readAll(Reader rd) throws IOException {
-  StringBuilder sb = new StringBuilder();
-  int cp;
-  while ((cp = rd.read()) != -1) {
-   sb.append((char) cp);
-  }
-  return sb.toString();
- }
-
- public static JSONArray readJsonFromUrl(String url) throws Exception, JSONException {
-  try {
-    String aux = new JSONTokener(IOUtils.toString(new URL(url).openStream‌​())).nextValue().toString();
-    JSONArray json = new JSONArray(aux);
-   return json;
-  }catch(Exception ex){
-      ex.printStackTrace();
-      errorFatal("JSON URL "+url);
-      errorFatal(ex.toString());
-      errorFatal("--------------------------------------");  
-      readJsonFromUrl(url);
-      return null;
-  }
- }
- 
-  public void load(){
-    try{
-        File Credentials = new File(System.getenv("APPDATA")+File.separator+"OsuMBD.conf");
-        Properties prop = new Properties();
-        if(!Credentials.exists()){
-             Credentials.createNewFile();
-             OutputStream conf = new FileOutputStream(System.getenv("APPDATA")+File.separator+"OsuMBD.conf");
-             prop.setProperty("SongDirectory", "");
-             prop.setProperty("API", "");
-             prop.store(conf, null);
-             conf.flush();
-             conf.close();
-        }else{
-            InputStream conf_load = new FileInputStream(System.getenv("APPDATA")+File.separator+"OsuMBD.conf");
-             prop.load(conf_load);
-             conf_load.close();
-             byte[] decoded = Base64.decodeBase64(prop.getProperty("API"));
-             T_Password.setText(new String(decoded, "UTF-8") + "\n");
-             String Direc = prop.getProperty("SongDirectory");
-             Directory = Direc;
-             T_Directory.setText(Directory);
+            }
+            return false;
         }
-    }catch(Exception ex){
-        ex.printStackTrace();
     }
-}
-  
-  public void set(String A, String B){
-    try{
-        String file = System.getenv("APPDATA")+File.separator+"OsuMBD.conf";
-        FileInputStream in = new FileInputStream(file);
-        Properties props = new Properties();
-        props.load(in);
-        in.close();
-        FileOutputStream out = new FileOutputStream(file);
-        props.setProperty(A, B);
-        props.store(out, null);
-        out.close();
-    }catch(Exception ex){
-        ex.printStackTrace();
-    }
-}
- 
- 
- 
- public void block(){
-     T_Password.setEnabled(false);
-     B_Login.setEnabled(false);
-     T_Directory.setEnabled(false);
-     B_Directory.setEnabled(false);
-     T_SearchTerm.setEnabled(false);
-     T_Difi.setEnabled(false);
-     T_Mapper.setEnabled(false);
-     C_noVideo.setEnabled(false);        
-     C_CalendarEnabled.setEnabled(false);        
-     Ca_fromMonth.setEnabled(false); 
-     Ca_fromYear.setEnabled(false);
-     Ca_toMonth.setEnabled(false);
-     Ca_toYear.setEnabled(false);
-     C_STD.setEnabled(false);
-     C_TAIKO.setEnabled(false);
-     C_CTB.setEnabled(false);
-     C_MANIA.setEnabled(false);
-     C_Ranked.setEnabled(false);
-     C_Aprove.setEnabled(false);
-     C_Unraked.setEnabled(false);
-     C_Qualified.setEnabled(false);
-     T_STAR.setEnabled(false);
-     T_CS.setEnabled(false);        
-     T_AR.setEnabled(false);        
-     T_HP.setEnabled(false);        
-     T_BPM.setEnabled(false);       
-     T_OD.setEnabled(false);        
-     T_Time.setEnabled(false);        
-     C_Genre.setEnabled(false);        
-     C_Lang.setEnabled(false);        
- }
- 
- public void unblock(){
-     T_Password.setEnabled(true);
-     B_Login.setEnabled(true);
-     T_Directory.setEnabled(true);
-     B_Directory.setEnabled(true);
-     T_SearchTerm.setEnabled(true);
-     T_Difi.setEnabled(true);
-     T_Mapper.setEnabled(true);
-     C_noVideo.setEnabled(true);        
-     C_CalendarEnabled.setEnabled(true);        
-     Ca_fromMonth.setEnabled(true); 
-     Ca_fromYear.setEnabled(true);
-     Ca_toMonth.setEnabled(true);
-     Ca_toYear.setEnabled(true);
-     C_STD.setEnabled(true);
-     C_TAIKO.setEnabled(true);
-     C_CTB.setEnabled(true);
-     C_MANIA.setEnabled(true);
-     C_Ranked.setEnabled(true);
-     C_Aprove.setEnabled(true);
-     C_Unraked.setEnabled(true);
-     C_Qualified.setEnabled(true);
-     T_STAR.setEnabled(true);
-     T_CS.setEnabled(true);        
-     T_AR.setEnabled(true);        
-     T_HP.setEnabled(true);        
-     T_BPM.setEnabled(true);       
-     T_OD.setEnabled(true);        
-     T_Time.setEnabled(true);        
-     C_Genre.setEnabled(true);        
-     C_Lang.setEnabled(true); 
- }
 
- @Override public Image getIconImage() {
+    private static String readAll(Reader rd) throws IOException {
+        StringBuilder sb = new StringBuilder();
+        int cp;
+        while ((cp = rd.read()) != -1) {
+            sb.append((char) cp);
+        }
+        return sb.toString();
+    }
+
+    public JSONArray readJsonFromUrl(String url) throws Exception, JSONException {
+        do {
+            try {
+                String aux = new JSONTokener(IOUtils.toString(new URL(url).openStream‌​())).nextValue().toString();
+                JSONArray json = new JSONArray(aux);
+                return json;
+            } catch (Throwable e) {
+                L_inFinded.setText("Wait");
+                Thread.sleep(10000);
+                errorFatal("Try Again on JSON URL " + url);
+                errorFatal("--------------------------------------");
+                continue;
+            }
+        } while (true);
+    }
+
+    public void load() {
+        try {
+            File Credentials = new File(System.getenv("APPDATA") + File.separator + "OsuMBD.conf");
+            Properties prop = new Properties();
+            if (!Credentials.exists()) {
+                Credentials.createNewFile();
+                OutputStream conf = new FileOutputStream(System.getenv("APPDATA") + File.separator + "OsuMBD.conf");
+                prop.setProperty("SongDirectory", "");
+                prop.setProperty("API", "");
+                prop.store(conf, null);
+                conf.flush();
+                conf.close();
+            } else {
+                InputStream conf_load = new FileInputStream(System.getenv("APPDATA") + File.separator + "OsuMBD.conf");
+                prop.load(conf_load);
+                conf_load.close();
+                byte[] decoded = Base64.decodeBase64(prop.getProperty("API"));
+                T_Password.setText(new String(decoded, "UTF-8") + "\n");
+                String Direc = prop.getProperty("SongDirectory");
+                Directory = Direc;
+                T_Directory.setText(Directory);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void set(String A, String B) {
+        try {
+            String file = System.getenv("APPDATA") + File.separator + "OsuMBD.conf";
+            FileInputStream in = new FileInputStream(file);
+            Properties props = new Properties();
+            props.load(in);
+            in.close();
+            FileOutputStream out = new FileOutputStream(file);
+            props.setProperty(A, B);
+            props.store(out, null);
+            out.close();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void block() {
+        T_Password.setEnabled(false);
+        B_Login.setEnabled(false);
+        T_Directory.setEnabled(false);
+        B_Directory.setEnabled(false);
+        T_SearchTerm.setEnabled(false);
+        T_Difi.setEnabled(false);
+        T_Mapper.setEnabled(false);
+        C_noVideo.setEnabled(false);
+        C_CalendarEnabled.setEnabled(false);
+        Ca_fromMonth.setEnabled(false);
+        Ca_fromYear.setEnabled(false);
+        Ca_toMonth.setEnabled(false);
+        Ca_toYear.setEnabled(false);
+        C_STD.setEnabled(false);
+        C_TAIKO.setEnabled(false);
+        C_CTB.setEnabled(false);
+        C_MANIA.setEnabled(false);
+        C_Ranked.setEnabled(false);
+        C_Aprove.setEnabled(false);
+        C_Unraked.setEnabled(false);
+        C_Qualified.setEnabled(false);
+        T_STAR.setEnabled(false);
+        T_CS.setEnabled(false);
+        T_AR.setEnabled(false);
+        T_HP.setEnabled(false);
+        T_BPM.setEnabled(false);
+        T_OD.setEnabled(false);
+        T_Time.setEnabled(false);
+        C_Genre.setEnabled(false);
+        C_Lang.setEnabled(false);
+    }
+
+    public void unblock() {
+        T_Password.setEnabled(true);
+        B_Login.setEnabled(true);
+        T_Directory.setEnabled(true);
+        B_Directory.setEnabled(true);
+        T_SearchTerm.setEnabled(true);
+        T_Difi.setEnabled(true);
+        T_Mapper.setEnabled(true);
+        C_noVideo.setEnabled(true);
+        C_CalendarEnabled.setEnabled(true);
+        Ca_fromMonth.setEnabled(true);
+        Ca_fromYear.setEnabled(true);
+        Ca_toMonth.setEnabled(true);
+        Ca_toYear.setEnabled(true);
+        C_STD.setEnabled(true);
+        C_TAIKO.setEnabled(true);
+        C_CTB.setEnabled(true);
+        C_MANIA.setEnabled(true);
+        C_Ranked.setEnabled(true);
+        C_Aprove.setEnabled(true);
+        C_Unraked.setEnabled(true);
+        C_Qualified.setEnabled(true);
+        T_STAR.setEnabled(true);
+        T_CS.setEnabled(true);
+        T_AR.setEnabled(true);
+        T_HP.setEnabled(true);
+        T_BPM.setEnabled(true);
+        T_OD.setEnabled(true);
+        T_Time.setEnabled(true);
+        C_Genre.setEnabled(true);
+        C_Lang.setEnabled(true);
+    }
+
+    @Override
+    public Image getIconImage() {
         Image retValue = Toolkit.getDefaultToolkit().getImage(ClassLoader.getSystemResource("Icon.png"));
         return retValue;
-}
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -2113,10 +2144,10 @@ public class JFrame extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator2;
     // End of variables declaration//GEN-END:variables
 
-
 }
 
 class URLBuilder {
+
     private StringBuilder folders, params;
     private String connType, host;
 
@@ -2124,7 +2155,7 @@ class URLBuilder {
         connType = conn;
     }
 
-    URLBuilder(){
+    URLBuilder() {
         folders = new StringBuilder();
         params = new StringBuilder();
     }
@@ -2140,7 +2171,9 @@ class URLBuilder {
     }
 
     void addParameter(String parameter, String value) {
-        if(params.toString().length() > 0){params.append("&");}
+        if (params.toString().length() > 0) {
+            params.append("&");
+        }
         params.append(parameter);
         params.append("=");
         params.append(value);
@@ -2152,7 +2185,7 @@ class URLBuilder {
         return uri.toURL().toString();
     }
 
-    String getRelativeURL() throws URISyntaxException, MalformedURLException{
+    String getRelativeURL() throws URISyntaxException, MalformedURLException {
         URI uri = new URI(null, null, folders.toString(), params.toString(), null);
         return uri.toString();
     }
